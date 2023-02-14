@@ -1,0 +1,42 @@
+.app__login {
+  justify-content: center;
+}
+
+.login__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+  padding: 5rem;
+  max-width: 400px;
+  margin-left: 25%;
+  border: solid black 1px;
+}
+.container_left {
+  flex: 1;
+  justify-content: center;
+  align-self: center;
+  margin: 1rem;
+}
+
+.container_right {
+  flex: 2;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem 1rem auto;
+}
+
+.form > input {
+  margin: 0.5rem 0 0.5rem 0;
+  padding: 1rem;
+}
+
+.form > Button {
+  margin-top: 0.5rem;
+  padding: 1rem;
+}
