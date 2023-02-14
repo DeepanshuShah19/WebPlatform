@@ -1,72 +1,58 @@
-import React, { useState } from "react";
-import WebhookIcon from "@mui/icons-material/Webhook";
-import { Button } from "@mui/material";
+import React, { Component } from "react";
+import { Grid, TextField, Button} from '@material-ui/core';
 import "../styles/Login.css";
+import {handleLogin} from '../utils/apiCalls';
+class Login extends Component {
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    console.log(email, password);
-    try {
-      console.log("sending request...");
-      let resp = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          password: password,
-          email: email,
-        }),
-      });
-
-      if (resp.status === 404) {
-        alert("Invalid User Email or Password");
-      } else {
-        alert("User Logged in successfully");
-      }
-    } catch (e) {
-      console.log(e.message);
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      isFormvalid: false
     }
+  }
+
+  handleChange = async (event) => {
+    this.setState({
+      [event.target.id]: [event.target.value]
+    }, () => {
+      this.handleFormValidation();
+    })
   };
 
-  return (
-    <div className="app__login">
-      <div className="login__container">
-        <div className="container_left">
-          <WebhookIcon />
-        </div>
-        <div className="container_right">
-          <form className="form" onSubmit={handleLogin} action="#">
-            <label for="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-
-            <label for="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
-            <Button type="submit" className="login__button" variant="contained">
+  handleFormValidation =async () => {
+    if (this.state.email && this.state.pasword) {
+      this.setState({ isFormvalid: true})
+    } else if(this.state.isFormvalid){
+      this.setState({isFormvalid: false})
+    }
+  }
+  handleLogin = async () => {
+    let loginResponse = await handleLogin(this.state.email, this.state.password);
+    console.log("loginResponse", loginResponse);
+  }
+  render() {
+    return (
+      <Grid className="app__login">
+        <Grid className="login__container">
+          <Grid className="container_right">
+            <Grid className="form">
+              <Grid>
+                <TextField id="email" required label="Email Id" type="text" onChange={this.handleChange} />
+              </Grid>
+              <Grid>
+                <TextField id="password" required label="Password" type="password" onChange={this.handleChange} />
+              </Grid>
+            </Grid>
+            <Button type="submit" className="login__button" variant="contained" onClick={this.handleLogin} disabled={!this.state.isFormvalid}>
               Sign In
             </Button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
 };
 
 export default Login;
