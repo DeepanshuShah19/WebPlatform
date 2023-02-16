@@ -60,31 +60,36 @@ class Login extends Component {
         ) : (
           <>
             <ThemeProvider theme={theme}>
-              <Grid container component="main" sx={{ height: "100vh" }}>
+              <Grid
+                container
+                component="main"
+                sx={{
+                  height: "100vh",
+                  // backgroundImage: "url(https://source.unsplash.com/random)",
+                  background:
+                    "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
+                  backgroundRepeat: "no-repeat",
+                  backgroundColor: (t) =>
+                    t.palette.mode === "light"
+                      ? t.palette.grey[50]
+                      : t.palette.grey[900],
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <CssBaseline />
-                <Grid
-                  item
-                  xs={false}
-                  sm={4}
-                  md={7}
-                  sx={{
-                    backgroundImage: "url(https://source.unsplash.com/random)",
-                    backgroundRepeat: "no-repeat",
-                    backgroundColor: (t) =>
-                      t.palette.mode === "light"
-                        ? t.palette.grey[50]
-                        : t.palette.grey[900],
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
                 <Grid
                   item
                   xs={12}
                   sm={8}
                   md={5}
                   component={Paper}
-                  elevation={6}
+                  elevation={10}
                   square
                 >
                   <Box
@@ -151,45 +156,6 @@ class Login extends Component {
                       <Copyright sx={{ mt: 5 }} />
                     </Box>
                   </Box>
-
-                  {/* <Grid className="form">
-                    <Grid>
-                      <TextField
-                        id="email"
-                        required
-                        label="Email Id"
-                        type="text"
-                        onChange={this.handleChange}
-                      />
-                    </Grid>
-                    <Grid>
-                      <TextField
-                        id="password"
-                        required
-                        label="Password"
-                        type="password"
-                        onChange={this.handleChange}
-                      />
-                    </Grid>
-                  </Grid> */}
-                  {/* <Button
-                    className="login__button"
-                    variant="contained"
-                    onClick={this.handleLogin}
-                    disabled={!this.state.isFormvalid}
-                  >
-                    Sign In
-                  </Button>
-
-                  <Button
-                    className="login__button"
-                    variant="contained"
-                    onClick={() => {
-                      this.setState({ register: true });
-                    }}
-                  >
-                    New User
-                  </Button> */}
                 </Grid>
               </Grid>
             </ThemeProvider>
