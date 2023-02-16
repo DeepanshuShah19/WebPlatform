@@ -1,4 +1,8 @@
-.app__login {
+.login {
+  background-image: #000;
+}
+
+/* .app__login {
   justify-content: center;
 }
 
@@ -39,4 +43,4 @@
 .form > Button {
   margin-top: 0.5rem;
   padding: 1rem;
-}
+} */
