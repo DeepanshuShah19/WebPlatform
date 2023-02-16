@@ -44,7 +44,8 @@ class Login extends Component {
       this.setState({ isFormvalid: false });
     }
   };
-  handleLogin = async () => {
+  handleLogin = async (e) => {
+    e.preventDefault();
     let loginResponse = await handleLogin(
       this.state.email,
       this.state.password
