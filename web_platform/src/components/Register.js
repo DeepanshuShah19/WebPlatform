@@ -10,11 +10,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import PhoneInput from "react-phone-input-2";
-// import WebhookIcon from "@mui/icons-material/Webhook";
+
 // import "../styles/Register.css";
 import "react-phone-input-2/lib/bootstrap.css";
 import { handleRegistration } from "../utils/apiCalls";
@@ -116,7 +114,7 @@ class Register extends Component {
             container
             component="main"
             sx={{
-              height: "105vh",
+              height: "100vh",
               // backgroundImage: "url(https://source.unsplash.com/random)",
               background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
               backgroundRepeat: "no-repeat",
