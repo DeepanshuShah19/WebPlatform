@@ -3,7 +3,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 
 import "./App.css";
-import Home from "./components/Home";
+import PhoneVerification from "./components/PhoneVerification";
+// import Home from "./components/Home";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/phone-verification" element={<PhoneVerification />} />
       </Routes>
     </Router>
   );

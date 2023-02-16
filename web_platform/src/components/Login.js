@@ -12,6 +12,10 @@ import { handleLogin } from "../utils/apiCalls";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import InputAdornment from "@mui/material/InputAdornment";
+import PasswordIcon from "@mui/icons-material/Password";
+
 import Copyright from "./Copyright";
 const theme = createTheme();
 
@@ -118,6 +122,13 @@ class Login extends Component {
                         name="email"
                         autoComplete="email"
                         onChange={this.handleChange}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <AccountCircle />
+                            </InputAdornment>
+                          ),
+                        }}
                       />
                       <TextField
                         margin="normal"
@@ -129,6 +140,13 @@ class Login extends Component {
                         label="Password"
                         type="password"
                         onChange={this.handleChange}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <PasswordIcon />
+                            </InputAdornment>
+                          ),
+                        }}
                       />
 
                       <Button
