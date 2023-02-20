@@ -99,7 +99,6 @@ class Login extends Component {
                   <Box
                     sx={{
                       my: 6,
-                      // mx: 4,
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
@@ -165,7 +164,7 @@ class Login extends Component {
 
                       <Grid container>
                         <Grid item xs>
-                          <Link href="#" variant="body2">
+                          <Link href="/forgot-password" variant="body2">
                             Forgot password?
                           </Link>
                         </Grid>
