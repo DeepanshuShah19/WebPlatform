@@ -73,39 +73,6 @@ class Register extends Component {
     console.log("loginResponse", registrationResponse);
   };
 
-  // const handleRegister = async (e) => {
-  //   e.preventDefault();
-  //   console.log(phone);
-
-  //   if (password1 !== password2) return alert("Password didn't match");
-
-  //   try {
-  //     console.log("Sending Request.....");
-  //     let resp = await fetch("http://localhost:5000/register", {
-  //       method: "POST",
-  //       headers: { "content-type": "application/json" },
-  //       body: JSON.stringify({
-  //         name: name,
-  //         password: password1,
-  //         email: email,
-  //         phone: phone,
-  //         country: country,
-  //         street: street,
-  //         province: province,
-  //         postalCode: postalCode,
-  //       }),
-  //     });
-  //     if (resp.status === 200) {
-  //       alert("User Registered Successfully");
-  //     } else if (resp.status === 409) {
-  //       alert("User Already Exists");
-  //     } else {
-  //       alert("User Registration Unsuccessfull");
-  //     }
-  //   } catch (e) {
-  //     console.log(e.message);
-  //   }
-  // };
   render() {
     return (
       <>
@@ -115,7 +82,6 @@ class Register extends Component {
             component="main"
             sx={{
               height: "100vh",
-              // backgroundImage: "url(https://source.unsplash.com/random)",
               background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
@@ -134,16 +100,16 @@ class Register extends Component {
             <CssBaseline />
             <Grid
               item
-              xs={12}
-              sm={8}
-              md={4}
+              xs={8}
+              sm={4}
+              md={3}
               component={Paper}
               elevation={10}
               square
             >
               <Box
                 sx={{
-                  marginTop: 5,
+                  marginTop: 3,
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -156,8 +122,11 @@ class Register extends Component {
                   Sign up
                 </Typography>
 
-                <Box component="form" sx={{ mt: 3, padding: 3 }}>
-                  <Grid container spacing={2}>
+                <Box
+                  component="form"
+                  sx={{ my: 3, paddingLeft: 3, paddingRight: 3 }}
+                >
+                  <Grid container spacing={1}>
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
@@ -185,30 +154,29 @@ class Register extends Component {
                         fullWidth
                         id="phone"
                         type="tel"
-                        country="ca"
-                        required
                         label="Phone Number"
                         onChange={this.handleChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
                         id="street"
-                        required
                         label="Street name"
                         type="text"
                         onChange={this.handleChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
                         id="province"
-                        required
                         label="Province"
                         type="text"
                         onChange={this.handleChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -216,20 +184,20 @@ class Register extends Component {
                       <TextField
                         fullWidth
                         id="postalCode"
-                        required
                         label="Postal Code"
                         type="text"
                         onChange={this.handleChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
                         id="country"
-                        required
                         label="Country"
                         type="text"
                         onChange={this.handleChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -240,6 +208,7 @@ class Register extends Component {
                         label="Password"
                         type="password"
                         onChange={this.handleChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -250,6 +219,7 @@ class Register extends Component {
                         label="Confirm Password"
                         type="password"
                         onChange={this.handleChange}
+                        autoFocus
                       />
                     </Grid>
                     <Grid item xs={12}>
@@ -264,7 +234,7 @@ class Register extends Component {
                   <Button
                     type="submit"
                     fullWidth
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 2, mb: 2 }}
                     variant="contained"
                     onClick={this.handleRegistration}
                     disabled={!this.state.isFormvalid}
@@ -278,8 +248,8 @@ class Register extends Component {
                       </Link>
                     </Grid>
                   </Grid>
+                  <Copyright sx={{ paddingTop: 2 }} />
                 </Box>
-                <Copyright sx={{ mt: 5, mb: 5 }} />
               </Box>
             </Grid>
           </Grid>
