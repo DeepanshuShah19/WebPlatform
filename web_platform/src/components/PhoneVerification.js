@@ -29,7 +29,6 @@ class PhoneVerification extends Component {
             component="main"
             sx={{
               height: "100vh",
-              // backgroundImage: "url(https://source.unsplash.com/random)",
               background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
               backgroundRepeat: "no-repeat",
               backgroundColor: (t) =>
@@ -48,9 +47,9 @@ class PhoneVerification extends Component {
             <CssBaseline />
             <Grid
               item
-              xs={12}
-              sm={8}
-              md={5}
+              xs={8}
+              sm={4}
+              md={3}
               component={Paper}
               elevation={10}
               square
@@ -58,7 +57,6 @@ class PhoneVerification extends Component {
               <Box
                 sx={{
                   my: 8,
-                  mx: 4,
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -70,7 +68,11 @@ class PhoneVerification extends Component {
                 <Typography component="h1" variant="h5">
                   Account Verification
                 </Typography>
-                <Box component="form" noValidate sx={{ mt: 1 }}>
+                <Box
+                  component="form"
+                  noValidate
+                  sx={{ mt: 1, paddingLeft: 5, paddingRight: 5 }}
+                >
                   <TextField
                     margin="normal"
                     fullWidth

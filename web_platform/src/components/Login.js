@@ -70,7 +70,6 @@ class Login extends Component {
                 component="main"
                 sx={{
                   height: "100vh",
-                  // backgroundImage: "url(https://source.unsplash.com/random)",
                   background:
                     "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
                   backgroundRepeat: "no-repeat",
@@ -90,17 +89,17 @@ class Login extends Component {
                 <CssBaseline />
                 <Grid
                   item
-                  xs={12}
-                  sm={8}
-                  md={5}
+                  xs={8}
+                  sm={4}
+                  md={3}
                   component={Paper}
                   elevation={10}
                   square
                 >
                   <Box
                     sx={{
-                      my: 8,
-                      mx: 4,
+                      my: 6,
+                      // mx: 4,
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
@@ -112,7 +111,11 @@ class Login extends Component {
                     <Typography component="h1" variant="h5">
                       Sign in
                     </Typography>
-                    <Box component="form" noValidate sx={{ mt: 1 }}>
+                    <Box
+                      component="form"
+                      noValidate
+                      sx={{ mt: 1, paddingLeft: 5, paddingRight: 5 }}
+                    >
                       <TextField
                         margin="normal"
                         fullWidth
@@ -167,12 +170,13 @@ class Login extends Component {
                           </Link>
                         </Grid>
                         <Grid item>
+                          {}
                           <Link href="/register" variant="body2">
                             {"Don't have an account? Sign Up"}
                           </Link>
                         </Grid>
                       </Grid>
-                      <Copyright sx={{ mt: 5 }} />
+                      <Copyright sx={{ mt: 5, paddingTop: 2 }} />
                     </Box>
                   </Box>
                 </Grid>
