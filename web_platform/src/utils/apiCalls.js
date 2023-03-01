@@ -1,15 +1,17 @@
-let API_URL = ""
+let API_URL = "http://localhost:12230/"
 
 export const handleLogin = async (emailid, password) => {
-    console.log("In getAllTasks function")
-    const requestBody = {
-        // 'token': TOKEN,
-    };
+    console.log("In login function")
+    const requestBody = JSON.stringify({
+        emailid,
+        password
+    });
 
-    console.log('stringified request: ', JSON.stringify(requestBody));
+    console.log('stringified request: ', requestBody);
 
     const options = {
         method: "POST",
+        mode: 'no-cors',
         crossDomain: true,
         headers: {
             "Content-Type": "application/json",
@@ -20,7 +22,7 @@ export const handleLogin = async (emailid, password) => {
     }; 
 
     try {
-        let response = await fetch(API_URL + "login", options);
+        let response = await fetch("http://localhost:12230/login", options);
         let json = await response.json();
         // return json;
         if (json.status === "ok") {

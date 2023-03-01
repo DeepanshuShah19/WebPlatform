@@ -33,7 +33,7 @@ class Login extends Component {
   handleChange = async (event) => {
     this.setState(
       {
-        [event.target.id]: [event.target.value],
+        [event.target.id]: event.target.value,
       },
       () => {
         this.handleFormValidation();
@@ -48,12 +48,12 @@ class Login extends Component {
       this.setState({ isFormvalid: false });
     }
   };
-  handleLogin = async (e) => {
-    e.preventDefault();
-    let loginResponse = await handleLogin(
-      this.state.email,
-      this.state.password
-    );
+  handleLogin = async () => {
+    // e.preventDefault();
+    // debugger;
+    console.log("??? ", this.state.email)
+    console.log("?? ", this.state.password)
+    let loginResponse = await handleLogin(this.state.email, this.state.password );
     console.log("loginResponse", loginResponse);
   };
 

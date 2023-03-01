@@ -34,31 +34,30 @@ class Register extends Component {
       province: "",
       postalCode: "",
       isFormvalid: false,
+      acceptedTerms: false
     };
   }
 
   handleChange = async (event) => {
-    this.setState(
-      {
-        [event.target.id]: [event.target.value],
-      },
-      () => {
+    if (event.target.id === 'acceptedTerms') {
+      this.setState({
+        [event.target.id]: event.target.checked,
+      }, () => {
         this.handleFormValidation();
-      }
-    );
+      });
+    } else {
+      this.setState({
+        [event.target.id]: event.target.value,
+      }, () => {
+        this.handleFormValidation();
+      });
+    }
   };
 
   handleFormValidation = async () => {
-    if (
-      this.state.email &&
-      this.state.password === this.state.confirmPassword &&
-      this.state.name &&
-      this.state.phone &&
-      this.state.country &&
-      this.state.street &&
-      this.state.province &&
-      this.state.postalCode
-    ) {
+    // debugger
+    if ( this.state.email && (this.state.password === this.state.confirmPassword) && this.state.name && this.state.phone && this.state.country &&
+      this.state.street && this.state.province && this.state.postalCode && this.state.acceptedTerms === true) {
       this.setState({ isFormvalid: true });
     } else if (this.state.isFormvalid) {
       this.setState({ isFormvalid: false });
@@ -70,7 +69,7 @@ class Register extends Component {
       this.state.email,
       this.state.password
     );
-    console.log("loginResponse", registrationResponse);
+    console.log("registration response", registrationResponse);
   };
 
   render() {
@@ -225,7 +224,7 @@ class Register extends Component {
                     <Grid item xs={12}>
                       <FormControlLabel
                         control={
-                          <Checkbox value="termsAndCondition" color="primary" />
+                          <Checkbox onChange={this.handleChange} name="acceptedTerms" id="acceptedTerms" color="primary" />
                         }
                         label="I agree to the following terms and Condition"
                       />
