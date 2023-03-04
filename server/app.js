@@ -71,13 +71,45 @@ app.post("/register", async (req, res) => {
         console.log("User Created with email id: ", emailid);
         res.send({
             status: "ok",
-            Details: "New User Created."
+            details: "New User Created."
         });
 
     } catch (error) {
         res.send({
             status: "error",
-            Details: "Something went wrong."
+            details: "Something went wrong."
+        });
+    }
+});
+
+//login API
+app.post("/login", async (req, res) => {
+    console.log("Received login request with body: ", req.body);
+    const {emailid, password} = req.body;
+
+    try {
+        const user = await User.findOne({ EmailId: emailid });
+        
+        if (!user) {
+            return res.send({ 
+                status: "error", 
+                details: "User not found" 
+            });
+        }
+        if (password === user.Password) {
+            return res.send({
+                status: "ok",
+                details: "User details matched"
+            })
+        }
+        res.send({
+            status: "error",
+            details: "invalid emailId password"
+        })
+    } catch (error) {
+        res.send({
+            status: "error",
+            details: "Something went wrong."
         });
     }
 });

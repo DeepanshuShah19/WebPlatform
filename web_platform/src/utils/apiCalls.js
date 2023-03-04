@@ -3,30 +3,37 @@ let API_URL = "http://localhost:12230/"
 export const handleLogin = async (emailId, password) => {
     console.log("In login function")
     const requestBody = JSON.stringify({
-        emailId,
-        password,
+        emailid: emailId,
+        password: password,
     });
 
-    console.log('stringified request: ', requestBody);
+    // console.log('stringified request: ', requestBody);
 
     const options = {
         method: "POST",
-        mode: 'no-cors',
         crossDomain: true,
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify(requestBody)
+        body: requestBody
     };
 
     try {
-        let response = await fetch("http://localhost:12230/login", options);
-        let json = await response.json();
-        // return json;
-        if (json.status === "ok") {
-            return json.data;
+        let status;
+        let details;
+        await fetch(API_URL + "login", options)
+            .then((res) => res.json())
+            .then((data) => {
+                status = data.status;
+                details = data.details;
+            });
+
+        if (status === "ok") {
+            return status;
+        } else {
+            return details;
         }
     } catch (err) {
         console.error('Error while getting all tasks.', err);
@@ -43,7 +50,7 @@ export const handleRegistration = async (name, emailId, password, phoneNumber) =
         phoneNumber: phoneNumber
     });
 
-    console.log('stringified request: ', requestBody);
+    // console.log('stringified request: ', requestBody);
 
     const options = {
         method: "POST",
@@ -57,13 +64,18 @@ export const handleRegistration = async (name, emailId, password, phoneNumber) =
     };
 
     try {
-        debugger;
-        let response = await fetch(API_URL + "register", options).then((res) => res.json())
+        let status;
+        let details;
+        await fetch(API_URL + "register", options)
+            .then((res) => res.json())
             .then((data) => {
-                console.log("userRegistered ", data)
+                status = data.status;
+                details = data.details;
             });
-        if (response.status == "ok") {
-            return response;
+        if (status == "ok") {
+            return status;
+        } else {
+            return details;
         }
     } catch (err) {
         console.error('Error while getting all tasks.', err);
