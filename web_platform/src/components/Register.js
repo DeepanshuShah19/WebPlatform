@@ -36,6 +36,7 @@ class Register extends Component {
       isFormvalid: false,
       acceptedTerms: false
     };
+    this.handleRegistration = this.handleRegistration.bind(this);
   }
 
   handleChange = async (event) => {
@@ -55,21 +56,35 @@ class Register extends Component {
   };
 
   handleFormValidation = async () => {
-    // debugger
-    if ( this.state.email && (this.state.password === this.state.confirmPassword) && this.state.name && this.state.phone && this.state.country &&
-      this.state.street && this.state.province && this.state.postalCode && this.state.acceptedTerms === true) {
+    if (this.state.email && (this.state.password === this.state.confirmPassword) && this.state.name && this.state.phone && this.state.acceptedTerms === true) {
       this.setState({ isFormvalid: true });
     } else if (this.state.isFormvalid) {
       this.setState({ isFormvalid: false });
     }
   };
 
-  handleRegistration = async () => {
-    let registrationResponse = await handleRegistration(
-      this.state.email,
-      this.state.password
-    );
-    console.log("registration response", registrationResponse);
+  handleRegistration = async (e) => {
+    e.preventDefault();
+
+    fetch("http://localhost:12230/register", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        emailid: this.state.email,
+        password: this.state.password,
+        phoneNumber: this.state.phone,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("userRegistered ", data.status)
+      });
   };
 
   render() {
@@ -153,12 +168,13 @@ class Register extends Component {
                         fullWidth
                         id="phone"
                         type="tel"
+                        required
                         label="Phone Number"
                         onChange={this.handleChange}
                         autoFocus
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    {/* <Grid item xs={12} sm={6}>
                       <TextField
                         fullWidth
                         id="street"
@@ -198,7 +214,7 @@ class Register extends Component {
                         onChange={this.handleChange}
                         autoFocus
                       />
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
@@ -231,7 +247,7 @@ class Register extends Component {
                     </Grid>
                   </Grid>
                   <Button
-                    type="submit"
+                    // type="submit"
                     fullWidth
                     sx={{ mt: 2, mb: 2 }}
                     variant="contained"
