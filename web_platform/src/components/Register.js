@@ -67,7 +67,7 @@ class Register extends Component {
 
   handlePhoneNumberChange = async (e) => {
     this.setState({ phone: e.target.value }, function () {
-      if (this.state.phone.length === 10) {
+      if (this.state.phone.length === 10 && this.state.code) {
         this.setState({ verifyButton: true });
       }
     })
@@ -128,7 +128,8 @@ class Register extends Component {
       alert("Verification Successful");
       this.setState({
         verified: true,
-        verifyOtp: false
+        verifyOtp: false,
+        verifyButton: false
       });
       // ...
     }).catch((error) => {
