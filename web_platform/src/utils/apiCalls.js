@@ -72,7 +72,7 @@ export const handleRegistration = async (name, emailId, password, phoneNumber) =
                 status = data.status;
                 details = data.details;
             });
-        if (status == "ok") {
+        if (status === "ok") {
             return status;
         } else {
             return details;

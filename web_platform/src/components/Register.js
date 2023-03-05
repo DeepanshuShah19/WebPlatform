@@ -12,13 +12,15 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-
+import app from "./FireBaseConfig";
 // import "../styles/Register.css";
 import "react-phone-input-2/lib/bootstrap.css";
 import { handleRegistration } from "../utils/apiCalls";
 import Copyright from "./Copyright";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 const theme = createTheme();
+const auth = getAuth(app);
 
 class Register extends Component {
   constructor(props) {
@@ -33,11 +35,18 @@ class Register extends Component {
       street: "",
       province: "",
       postalCode: "",
+      code: "",
+      otp: "",
       isFormvalid: false,
       acceptedTerms: false,
-      registrationSuccess: false
+      registrationSuccess: false,
+      verifyButton: false,
+      verifyOtp: false,
+      verified: false,
     };
     this.handleRegistration = this.handleRegistration.bind(this);
+    this.onSignInSubmit = this.onSignInSubmit.bind(this);
+    this.verifyCode = this.verifyCode.bind(this);
   }
 
   handleChange = async (event) => {
@@ -56,8 +65,16 @@ class Register extends Component {
     }
   };
 
+  handlePhoneNumberChange = async (e) => {
+    this.setState({ phone: e.target.value }, function () {
+      if (this.state.phone.length === 10) {
+        this.setState({ verifyButton: true });
+      }
+    })
+  }
+
   handleFormValidation = async () => {
-    if (this.state.email && (this.state.password === this.state.confirmPassword) && this.state.name && this.state.phone && this.state.acceptedTerms === true) {
+    if (this.state.email && (this.state.password === this.state.confirmPassword) && this.state.name && (this.state.phone.length === 10) && this.state.acceptedTerms === true && this.state.code && this.state.verified) {
       this.setState({ isFormvalid: true });
     } else if (this.state.isFormvalid) {
       this.setState({ isFormvalid: false });
@@ -73,12 +90,60 @@ class Register extends Component {
     }
   };
 
+  onCaptchaVerify = async => {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      'recaptcha-container', {
+      'size': 'invisible',
+      'callback': (response) => {
+        this.onSignInSubmit();
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        // ...
+      },
+    }, auth);
+  }
+
+  onSignInSubmit = async => {
+    this.onCaptchaVerify();
+    const phoneNumber = "+" + this.state.code + this.state.phone;
+    const appVerifier = window.recaptchaVerifier;
+    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+        alert("OTP sended");
+        this.setState({ verifyOtp: true });
+        // ...
+      }).catch((error) => {
+        // Error; SMS not sent
+        // ...
+      });
+  }
+
+  verifyCode = async => {
+    // const code = getCodeFromUserInput();
+    window.confirmationResult.confirm(this.state.otp).then((result) => {
+      // User signed in successfully.
+      // const user = result.user;
+      alert("Verification Successful");
+      this.setState({
+        verified: true,
+        verifyOtp: false
+      });
+      // ...
+    }).catch((error) => {
+      alert("Invalid OTP");
+      // User couldn't sign in (bad verification code?)
+      // ...
+    });
+  }
+
   render() {
     return (
       <>
         {this.state.registrationSuccess
-          ? 
-            (window.location.href = "./phone-verification")
+          ?
+          (window.location.href = "./phone-verification")
           : <>
             <ThemeProvider theme={theme}>
               <Grid
@@ -130,6 +195,7 @@ class Register extends Component {
                       component="form"
                       sx={{ my: 3, paddingLeft: 3, paddingRight: 3 }}
                     >
+                      <Grid id="recaptcha-container"></Grid>
                       <Grid container spacing={1}>
                         <Grid item xs={12}>
                           <TextField
@@ -142,7 +208,7 @@ class Register extends Component {
                             autoFocus
                           />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12}>
                           <TextField
                             fullWidth
                             id="email"
@@ -153,17 +219,63 @@ class Register extends Component {
                             autoFocus
                           />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={3}>
+                          <TextField
+                            fullWidth
+                            id="code"
+                            required
+                            label="Code"
+                            type="tel"
+                            onChange={this.handleChange}
+                            autoFocus
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
                           <TextField
                             fullWidth
                             id="phone"
                             type="tel"
                             required
                             label="Phone Number"
-                            onChange={this.handleChange}
+                            onChange={this.handlePhoneNumberChange}
                             autoFocus
                           />
                         </Grid>
+                        {this.state.verifyButton
+                          ? <Button
+                            // type="submit"
+                            fullWidth
+                            sx={{ mt: 2, mb: 2 }}
+                            variant="contained"
+                            onClick={this.onSignInSubmit}
+                          >
+                            Verify Phone Number
+                          </Button>
+                          : null}
+                        {this.state.verifyOtp
+                          ? <>
+                            <Grid item xs={12} sm={9}>
+                              <TextField
+                                fullWidth
+                                id="otp"
+                                type="tel"
+                                required
+                                label="OTP"
+                                onChange={this.handleChange}
+                                autoFocus
+                              />
+                            </Grid>
+                            <Button
+                              // type="submit"
+                              fullWidth
+                              sx={{ mt: 2, mb: 2 }}
+                              variant="contained"
+                              onClick={this.verifyCode}
+                            >
+                              Verify OTP
+                            </Button>
+                          </>
+                          : null}
                         {/* <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
