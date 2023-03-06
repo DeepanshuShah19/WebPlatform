@@ -16,9 +16,9 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import InputAdornment from "@mui/material/InputAdornment";
 import PasswordIcon from "@mui/icons-material/Password";
 import Copyright from "./Copyright";
-import { GoogleLogin } from '@react-oauth/google';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import jwt_decode from 'jwt-decode';
+import { GoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const theme = createTheme();
 
@@ -30,7 +30,7 @@ class Login extends Component {
       password: "",
       isFormvalid: false,
       register: false,
-      loginSuccess: false
+      loginSuccess: false,
     };
   }
 
@@ -58,9 +58,8 @@ class Login extends Component {
 
     let loginStatus = await handleLogin(this.state.email, this.state.password);
     if (loginStatus === "ok") {
-      this.setState({ loginSuccess: true })
+      this.setState({ loginSuccess: true });
     }
-
   };
 
   handleSuccessfulGoogleLogin = async (response) => {
@@ -70,16 +69,17 @@ class Login extends Component {
     console.log(userDetails);
     let loginStatus = await handleGoogleLogin(userDetails);
     if (loginStatus === "ok") {
-      this.setState({ loginSuccess: true })
+      this.setState({ loginSuccess: true });
     }
-  }
+  };
 
   render() {
     return (
       <>
-        {this.state.loginSuccess
-          ? (window.location.href = "./forgot-password")
-          : <>
+        {this.state.loginSuccess ? (
+          (window.location.href = "./forgot-password")
+        ) : (
+          <>
             {this.state.register ? (
               (window.location.href = "./register")
             ) : (
@@ -181,29 +181,47 @@ class Login extends Component {
                           >
                             Sign In
                           </Button>
-                          <center>
-                            <GoogleOAuthProvider clientId="724670474306-rk0ssgl5i7ujn9af6lrt6s7vrbn4u86l.apps.googleusercontent.com">
-                              <GoogleLogin
-                                onSuccess={this.handleSuccessfulGoogleLogin}
-                                onError={() => {
-                                  console.log('Google Login Failed');
-                                }}
-                              />
-                            </GoogleOAuthProvider>
-                          </center>
-                          <Grid container>
+
+                          <Grid container sx={{ mb: 1 }}>
                             <Grid item xs>
                               <Link href="/forgot-password" variant="body2">
                                 Forgot password?
                               </Link>
                             </Grid>
                             <Grid item>
-                              { }
+                              {}
                               <Link href="/register" variant="body2">
                                 {"Don't have an account? Sign Up"}
                               </Link>
                             </Grid>
                           </Grid>
+
+                          <center>
+                            <Typography
+                              component="body1"
+                              variant="span"
+                              sx={{
+                                color: "gray",
+                              }}
+                            >
+                              OR
+                            </Typography>
+                            <Button fullWidth>
+                              <GoogleOAuthProvider clientId="724670474306-rk0ssgl5i7ujn9af6lrt6s7vrbn4u86l.apps.googleusercontent.com">
+                                <GoogleLogin
+                                  theme="filled_blue"
+                                  shape="rectangular"
+                                  size="large"
+                                  type="standard"
+                                  width="300px"
+                                  onSuccess={this.handleSuccessfulGoogleLogin}
+                                  onError={() => {
+                                    console.log("Google Login Failed");
+                                  }}
+                                />
+                              </GoogleOAuthProvider>
+                            </Button>
+                          </center>
                           <Copyright sx={{ mt: 5, paddingTop: 2 }} />
                         </Box>
                       </Box>
@@ -211,11 +229,10 @@ class Login extends Component {
                   </Grid>
                 </ThemeProvider>
               </>
-            )
-            }
-          </>}
+            )}
+          </>
+        )}
       </>
-
     );
   }
 }
