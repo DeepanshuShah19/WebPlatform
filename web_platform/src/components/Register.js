@@ -191,7 +191,6 @@ class Register extends Component {
                     <Typography component="h1" variant="h5">
                       Sign up
                     </Typography>
-
                     <Box
                       component="form"
                       sx={{ my: 3, paddingLeft: 3, paddingRight: 3 }}

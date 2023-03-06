@@ -58,7 +58,7 @@ app.post("/register", async (req, res) => {
 
     try {
         const oldUser = await User.findOne({ EmailId: emailid });
-        
+
         if (oldUser) {
             return res.send({ status: "error" });
         }
@@ -85,15 +85,15 @@ app.post("/register", async (req, res) => {
 //login API
 app.post("/login", async (req, res) => {
     console.log("Received login request with body: ", req.body);
-    const {emailid, password} = req.body;
+    const { emailid, password } = req.body;
 
     try {
         const user = await User.findOne({ EmailId: emailid });
-        
+
         if (!user) {
-            return res.send({ 
-                status: "error", 
-                details: "User not found" 
+            return res.send({
+                status: "error",
+                details: "User not found"
             });
         }
         if (password === user.Password) {
@@ -107,6 +107,40 @@ app.post("/login", async (req, res) => {
             details: "invalid emailId password"
         })
     } catch (error) {
+        res.send({
+            status: "error",
+            details: "Something went wrong."
+        });
+    }
+});
+
+//google Login
+app.post("/googleLogin", async (req, res) => {
+    console.log("Received Google login request with body: ", req.body);
+
+    try {
+        const user = await User.findOne({ EmailId: req.body.userDetails.email });
+        if (!user) {
+            console.log("inside !user")
+            await User.create({
+                Name: req.body.userDetails.given_name,
+                EmailId: req.body.userDetails.email,
+                Password: req.body.userDetails.given_name,
+                PhoneNumber: "phoneNumber",
+            });
+            // console.log("User Created with email id: ", emailid);
+            res.send({
+                status: "ok",
+                details: "New User Created."
+            });
+        } else {
+            return res.send({
+                status: "ok",
+                details: "User details matched"
+            })
+        }
+    } catch (error) {
+        console.log("error: ", error)
         res.send({
             status: "error",
             details: "Something went wrong."

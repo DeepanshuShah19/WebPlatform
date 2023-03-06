@@ -82,3 +82,40 @@ export const handleRegistration = async (name, emailId, password, phoneNumber) =
     }
     return null;
 }
+
+export const handleGoogleLogin = async (userDetails) => {
+    console.log("In Google login function")
+    const requestBody = JSON.stringify({
+        userDetails: userDetails
+    });
+
+    const options = {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: requestBody
+    };
+
+    try {
+        let status;
+        let details;
+        await fetch(API_URL + "googleLogin", options)
+            .then((res) => res.json())
+            .then((data) => {
+                status = data.status;
+                details = data.details;
+            });
+        if (status === "ok") {
+            return status;
+        } else {
+            return details;
+        }
+    } catch (err) {
+        console.error('Error while getting all tasks.', err);
+    }
+    return null;
+}
