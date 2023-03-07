@@ -4,6 +4,7 @@ import Register from "./components/Register";
 import ForgotPassword from "./components/ForgotPassword";
 import PhoneVerification from "./components/PhoneVerification";
 import "./App.css";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/phone-verification" element={<PhoneVerification />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </Router>
   );
