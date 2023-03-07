@@ -13,11 +13,16 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import app from "./FireBaseConfig";
+
 // import "../styles/Register.css";
 import "react-phone-input-2/lib/bootstrap.css";
 import { handleRegistration } from "../utils/apiCalls";
 import Copyright from "./Copyright";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
 
 const theme = createTheme();
 const auth = getAuth(app);
@@ -50,18 +55,24 @@ class Register extends Component {
   }
 
   handleChange = async (event) => {
-    if (event.target.id === 'acceptedTerms') {
-      this.setState({
-        [event.target.id]: event.target.checked,
-      }, () => {
-        this.handleFormValidation();
-      });
+    if (event.target.id === "acceptedTerms") {
+      this.setState(
+        {
+          [event.target.id]: event.target.checked,
+        },
+        () => {
+          this.handleFormValidation();
+        }
+      );
     } else {
-      this.setState({
-        [event.target.id]: event.target.value,
-      }, () => {
-        this.handleFormValidation();
-      });
+      this.setState(
+        {
+          [event.target.id]: event.target.value,
+        },
+        () => {
+          this.handleFormValidation();
+        }
+      );
     }
   };
 
@@ -70,11 +81,19 @@ class Register extends Component {
       if (this.state.phone.length === 10 && this.state.code) {
         this.setState({ verifyButton: true });
       }
-    })
-  }
+    });
+  };
 
   handleFormValidation = async () => {
-    if (this.state.email && (this.state.password === this.state.confirmPassword) && this.state.name && (this.state.phone.length === 10) && this.state.acceptedTerms === true && this.state.code && this.state.verified) {
+    if (
+      this.state.email &&
+      this.state.password === this.state.confirmPassword &&
+      this.state.name &&
+      this.state.phone.length === 10 &&
+      this.state.acceptedTerms === true &&
+      this.state.code &&
+      this.state.verified
+    ) {
       this.setState({ isFormvalid: true });
     } else if (this.state.isFormvalid) {
       this.setState({ isFormvalid: false });
@@ -84,25 +103,33 @@ class Register extends Component {
   handleRegistration = async (e) => {
     e.preventDefault();
 
-    let registartionResponse = await handleRegistration(this.state.name, this.state.email, this.state.password, this.state.phone);
+    let registartionResponse = await handleRegistration(
+      this.state.name,
+      this.state.email,
+      this.state.password,
+      this.state.phone
+    );
     if (registartionResponse === "ok") {
-      this.setState({ registrationSuccess: true })
+      this.setState({ registrationSuccess: true });
     }
   };
 
-  onCaptchaVerify = async => {
+  onCaptchaVerify = (async) => {
     window.recaptchaVerifier = new RecaptchaVerifier(
-      'recaptcha-container', {
-      'size': 'invisible',
-      'callback': (response) => {
-        this.onSignInSubmit();
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        // ...
+      "recaptcha-container",
+      {
+        size: "invisible",
+        callback: (response) => {
+          this.onSignInSubmit();
+          // reCAPTCHA solved, allow signInWithPhoneNumber.
+          // ...
+        },
       },
-    }, auth);
-  }
+      auth
+    );
+  };
 
-  onSignInSubmit = async => {
+  onSignInSubmit = (async) => {
     this.onCaptchaVerify();
     const phoneNumber = "+" + this.state.code + this.state.phone;
     const appVerifier = window.recaptchaVerifier;
@@ -114,45 +141,50 @@ class Register extends Component {
         alert("OTP sended");
         this.setState({ verifyOtp: true });
         // ...
-      }).catch((error) => {
+      })
+      .catch((error) => {
         // Error; SMS not sent
         // ...
       });
-  }
+  };
 
-  verifyCode = async => {
+  verifyCode = (async) => {
     // const code = getCodeFromUserInput();
-    window.confirmationResult.confirm(this.state.otp).then((result) => {
-      // User signed in successfully.
-      // const user = result.user;
-      alert("Verification Successful");
-      this.setState({
-        verified: true,
-        verifyOtp: false,
-        verifyButton: false
+    window.confirmationResult
+      .confirm(this.state.otp)
+      .then((result) => {
+        // User signed in successfully.
+        // const user = result.user;
+        alert("Verification Successful");
+        this.setState({
+          verified: true,
+          verifyOtp: false,
+          verifyButton: false,
+        });
+        // ...
+      })
+      .catch((error) => {
+        alert("Invalid OTP");
+        // User couldn't sign in (bad verification code?)
+        // ...
       });
-      // ...
-    }).catch((error) => {
-      alert("Invalid OTP");
-      // User couldn't sign in (bad verification code?)
-      // ...
-    });
-  }
+  };
 
   render() {
     return (
       <>
-        {this.state.registrationSuccess
-          ?
+        {this.state.registrationSuccess ? (
           (window.location.href = "./phone-verification")
-          : <>
+        ) : (
+          <>
             <ThemeProvider theme={theme}>
               <Grid
                 container
                 component="main"
                 sx={{
                   height: "100vh",
-                  background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
+                  background:
+                    "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
                   backgroundRepeat: "no-repeat",
                   backgroundColor: (t) =>
                     t.palette.mode === "light"
@@ -241,8 +273,9 @@ class Register extends Component {
                             autoFocus
                           />
                         </Grid>
-                        {this.state.verifyButton
-                          ? <Button
+
+                        {this.state.verifyButton ? (
+                          <Button
                             // type="submit"
                             fullWidth
                             sx={{ mt: 2, mb: 2 }}
@@ -251,9 +284,9 @@ class Register extends Component {
                           >
                             Verify Phone Number
                           </Button>
-                          : null}
-                        {this.state.verifyOtp
-                          ? <>
+                        ) : null}
+                        {this.state.verifyOtp ? (
+                          <>
                             <Grid item xs={12} sm={9}>
                               <TextField
                                 fullWidth
@@ -275,7 +308,7 @@ class Register extends Component {
                               Verify OTP
                             </Button>
                           </>
-                          : null}
+                        ) : null}
                         {/* <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
@@ -342,7 +375,12 @@ class Register extends Component {
                         <Grid item xs={12}>
                           <FormControlLabel
                             control={
-                              <Checkbox onChange={this.handleChange} name="acceptedTerms" id="acceptedTerms" color="primary" />
+                              <Checkbox
+                                onChange={this.handleChange}
+                                name="acceptedTerms"
+                                id="acceptedTerms"
+                                color="primary"
+                              />
                             }
                             label="I agree to the following terms and Condition"
                           />
@@ -372,7 +410,7 @@ class Register extends Component {
               </Grid>
             </ThemeProvider>
           </>
-        }
+        )}
       </>
     );
   }

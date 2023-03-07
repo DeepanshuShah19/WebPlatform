@@ -14,8 +14,10 @@
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^9.17.2",
     "jwt-decode": "^3.1.2",
+    "mui-one-time-password-input": "^1.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-otp-input": "^2.4.0",
     "react-phone-input-2": "^2.15.1",
     "react-phone-input-material-ui": "^2.17.4",
     "react-phone-number-input": "^3.2.18",
@@ -51,6 +53,5 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {}
+  "license": "ISC"
 }
