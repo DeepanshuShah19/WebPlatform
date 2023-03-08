@@ -77,7 +77,7 @@ class Login extends Component {
     return (
       <>
         {this.state.loginSuccess ? (
-          (window.location.href = "./forgot-password")
+          (window.location.href = "./home")
         ) : (
           <>
             {this.state.register ? (
