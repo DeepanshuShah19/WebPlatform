@@ -19,8 +19,8 @@ mongoose
   .catch((e) => console.log(e));
 
 //Defining API Port 12230
-app.listen(12231, () => {
-  console.log("Server started on port 12231");
+app.listen(12230, () => {
+  console.log("Server started on port 12230");
 });
 
 //test API
