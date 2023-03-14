@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Box, Stack, Button } from "@mui/material";
+import { Box, Stack, Button, Link } from "@mui/material";
 import WebhookIcon from "@mui/icons-material/Webhook";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -39,15 +39,24 @@ class NavBar extends Component {
             alignItems="center"
           >
             <nav>
-              <Stack
-                direction="row"
-                spacing={2}
-                justifyContent="space-between"
-                alignItems="center"
+              <Link
+                underline="none"
+                href="./home"
+                varient="body2"
+                sx={{
+                  color: "white",
+                }}
               >
-                <WebhookIcon />
-                <p> Web Platform </p>
-              </Stack>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <WebhookIcon />
+                  <p> Web Platform </p>
+                </Stack>
+              </Link>
             </nav>
             <nav>
               <Stack
@@ -74,22 +83,23 @@ class NavBar extends Component {
                   Sign Out
                 </Button>
 
-                <Button
-                  style={{
-                    borderRadius: 6,
-                    fontSize: "1rem",
-                  }}
-                  variant="contained"
-                  className="nav_button__register"
-                  // onClick={navToRegisterPage}
-                >
-                  <AccountCircleIcon
+                <Link underline="none" href="/profile" varient="body2">
+                  <Button
                     style={{
-                      marginRight: "0.5rem",
+                      borderRadius: 6,
+                      fontSize: "1rem",
                     }}
-                  />
-                  Profile
-                </Button>
+                    variant="contained"
+                    className="nav_button__register"
+                  >
+                    <AccountCircleIcon
+                      style={{
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                    Profile
+                  </Button>
+                </Link>
               </Stack>
             </nav>
           </Stack>
