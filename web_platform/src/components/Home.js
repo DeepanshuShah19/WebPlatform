@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import { Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 
 const theme = createTheme();
@@ -91,15 +91,22 @@ class Home extends Component {
                       sem elit, mattis id enim congue, suscipit porta mauris.
                       Vivamus euismod purus lacinia porttitor pulvinar.
                     </Typography>
-                    <Button
-                      sx={{
-                        marginTop: 3,
-                        height: "3rem",
-                      }}
-                      variant="contained"
+
+                    <Link
+                      underline="none"
+                      href="/scheduled-meetings"
+                      varient="body2"
                     >
-                      Your Meeting
-                    </Button>
+                      <Button
+                        sx={{
+                          marginTop: 3,
+                          height: "3rem",
+                        }}
+                        variant="contained"
+                      >
+                        Your Meeting
+                      </Button>
+                    </Link>
                   </Box>
                 </Grid>
                 <Grid
@@ -141,15 +148,18 @@ class Home extends Component {
                       sem elit, mattis id enim congue, suscipit porta mauris.
                       Vivamus euismod purus lacinia porttitor pulvinar.
                     </Typography>
-                    <Button
-                      sx={{
-                        marginTop: 3,
-                        height: "3rem",
-                      }}
-                      variant="contained"
-                    >
-                      Schedule a Meeting
-                    </Button>
+
+                    <Link href="/scheduler" underline="None" variant="body2">
+                      <Button
+                        sx={{
+                          marginTop: 3,
+                          height: "3rem",
+                        }}
+                        variant="contained"
+                      >
+                        Schedule a Meeting
+                      </Button>
+                    </Link>
                   </Box>
                 </Grid>
               </Grid>
