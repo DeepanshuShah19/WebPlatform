@@ -3,10 +3,11 @@ import Nav from "./NavBar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
+
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Typography } from "@mui/material";
+import { Typography, Chip, Avatar } from "@mui/material";
 
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -14,14 +15,36 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { maxWidth } from "@mui/system";
 
 class Scheduler extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      value: "",
+      emails: [],
+    };
   }
-  handleChange = async (event) => {};
+  handleChange = async (event) => {
+    this.setState({ value: event.target.value });
+  };
+
+  handleKeyPress = async (event) => {
+    if (event.key === "Enter") {
+      //Add the email to the list of emails
+      this.setState((prevState) => ({
+        emails: [...prevState.emails, prevState.value.trim()],
+        value: "",
+      }));
+    }
+  };
+
+  handleDelete = async (index) => {
+    this.setState((prevState) => {
+      const newEmails = [...prevState.emails];
+      newEmails.splice(index, 1);
+      return { emails: newEmails };
+    });
+  };
 
   render() {
     return (
@@ -97,11 +120,22 @@ class Scheduler extends Component {
                       fullWidth
                       id="email"
                       required
-                      label="Attendee Email Address"
-                      type="email"
+                      value={this.state.value}
                       onChange={this.handleChange}
+                      onKeyPress={this.handleKeyPress}
+                      label="Attendee Email Address"
+                      type="text"
                       autoFocus
                     />
+                    {this.state.emails.map((email, index) => (
+                      <Chip
+                        key={index}
+                        label={email}
+                        onDelete={() => this.handleDelete(index)}
+                        avatar={<Avatar>{email[0]}</Avatar>}
+                        style={{ margin: "4px" }}
+                      />
+                    ))}
                   </Grid>
                   <Grid item xs={12}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -109,11 +143,7 @@ class Scheduler extends Component {
                         <DemoItem>
                           <DatePicker
                             label="Select a Date"
-                            // sx={{
-                            //   width: "22rem",
-                            // }}
                             required
-                            // defaultValue={dayjs("2022-04-17")}
                             onChange={this.handleChange}
                             autoFocus
                           />
