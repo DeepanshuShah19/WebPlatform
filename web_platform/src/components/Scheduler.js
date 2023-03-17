@@ -15,6 +15,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { createMeeting } from "../utils/apiCalls";
 
 class Scheduler extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Scheduler extends Component {
       emails: [],
     };
   }
+
   handleChange = async (event) => {
     this.setState({ value: event.target.value });
   };
@@ -45,6 +47,11 @@ class Scheduler extends Component {
       return { emails: newEmails };
     });
   };
+
+  scheduleMeeting = async () => {
+    let createMeetingResponse = await createMeeting("shah8y@uwindsor.ca", "test", "123465413")
+    console.log("createMeetingResponse ", createMeetingResponse)
+  }
 
   render() {
     return (
@@ -175,7 +182,7 @@ class Scheduler extends Component {
                 <Button
                   fullWidth
                   sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
-                  variant="contained"
+                  variant="contained" onClick={this.scheduleMeeting}
                 >
                   Schedule a Meeting
                 </Button>

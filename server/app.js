@@ -4,6 +4,12 @@ const mongoose = require("mongoose");
 app.use(express.json());
 const cors = require("cors");
 app.use(cors());
+const jwt = require("jsonwebtoken");
+const rp = require("request-promise");
+
+//API keys generated from ZOOM Marketplace
+const API_KEY = "GIR_uWycTZerS_8nt6jhQg";
+const API_SECRET_KEY = "A0mK6ZehBeO6YQCtVU6qP7bvVvj91KDdH5qf";
 
 const mongoDbURL =
   "mongodb+srv://deepanshu:university@webportal.iumygie.mongodb.net/WebPortal?retryWrites=true&w=majority";
@@ -147,3 +153,57 @@ app.post("/googleLogin", async (req, res) => {
     });
   }
 });
+
+//create Zoom Meeting
+app.post("/createMeeting", async (req, res) => {
+  const payload = {
+    iss: API_KEY,
+    exp: new Date().getTime() + 5000,
+  }
+
+  const token = jwt.sign(payload, API_SECRET_KEY);
+  var options = {
+    method: "POST",
+    uri: "https://api.zoom.us/v2/users/" + req.body.emailid + "/meetings",
+    body: {
+      "topic": req.body.topic,
+      "type": 2,
+      "start_time": "2023-03-19T12:10:10Z",
+      // "start_time": req.body.time,
+      "duration": "60",
+      "settings": {
+        "host_video": true,
+        "participant_video": true,
+        "join_before_host": true,
+        "mute_upon_entry": "true",
+        "watermark": "true",
+        "audio": "voip",
+        "auto_recording": "cloud"
+      }
+    },
+    auth: {
+      bearer: token
+    },
+    headers: {
+      "user-Agent": "Zoom-api-Jwt-Request",
+      "content-type": "application/json",
+    },
+    json: true
+  };
+
+  rp(options)
+    .then(function (response) {
+      console.log("response is: ", response);
+      res.send({
+        status: "ok",
+        data: response
+      })
+    })
+    .catch(function (err) {
+      console.log("API call failed, reason ", err);
+      res.send({
+        status: "error",
+        data: "Cannot create Meeting"
+      })
+    });
+})
