@@ -1,4 +1,5 @@
 let API_URL = "http://localhost:12230/"
+let ZOOM_API_BASE_URL = "https://api.zoom.us/v2/"
 
 export const handleLogin = async (emailId, password) => {
     console.log("In login function")
@@ -114,6 +115,44 @@ export const handleGoogleLogin = async (userDetails) => {
         } else {
             return details;
         }
+    } catch (err) {
+        console.error('Error while getting all tasks.', err);
+    }
+    return null;
+}
+
+export const createMeeting = async (emailId, topic, time) => {
+    console.log("In getbearerToken function")
+    const requestBody = JSON.stringify({
+        emailid: emailId,
+        topic: topic,
+        time: time
+    });
+
+    // console.log('stringified request: ', requestBody);
+
+    const options = {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: requestBody
+    };
+
+    try {
+        let status;
+        let response;
+        await fetch(API_URL + "createMeeting", options)
+            .then((res) => res.json())
+            .then((data) => {
+                status = data.status;
+                response = data.data
+            });
+
+        return response;
     } catch (err) {
         console.error('Error while getting all tasks.', err);
     }
