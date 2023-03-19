@@ -154,7 +154,7 @@ app.post("/googleLogin", async (req, res) => {
   }
 });
 
-//create Zoom Meeting
+//create Zoom Meeting API
 app.post("/createMeeting", async (req, res) => {
   const payload = {
     iss: API_KEY,
@@ -238,13 +238,13 @@ app.post("/saveMeeting", async (req, res) => {
   }
 });
 
-//extract all user meetings
+//extract all user meetings API
 app.post("/getUserMeetings", async (req, res) => {
   console.log("Received getUserMeetings request with body: ", req.body);
 
   try {
     const meetings = await UserMeeting.find({ EmailId: req.body.emailId });
-    console.log("meetings: ",meetings)
+    console.log("meetings: ", meetings)
     if (!meetings) {
       return res.send({
         status: "error",
@@ -254,6 +254,67 @@ app.post("/getUserMeetings", async (req, res) => {
     return res.send({
       status: "ok",
       meetings: meetings,
+    });
+  } catch (error) {
+    res.send({
+      status: "error",
+      details: "Something went wrong.",
+    });
+  }
+});
+
+//delete Zoom meeting API
+app.post("/deleteMeeting", async (req, res) => {
+  const payload = {
+    iss: API_KEY,
+    exp: new Date().getTime() + 5000,
+  }
+
+  const token = jwt.sign(payload, API_SECRET_KEY);
+  var options = {
+    method: "DELETE",
+    uri: "https://api.zoom.us/v2/meetings/" + req.body.meetingId,
+    auth: {
+      bearer: token
+    },
+    headers: {
+      "user-Agent": "Zoom-api-Jwt-Request",
+      "content-type": "application/json",
+    },
+    json: true
+  };
+
+  rp(options)
+    .then(function (response) {
+      res.send({
+        status: "ok",
+      })
+    })
+    .catch(function (err) {
+      console.log("API call failed, reason ", err);
+      res.send({
+        status: "error",
+        data: "Cannot create Meeting"
+      })
+    });
+})
+
+//delete meeting from database API
+app.post("/deleteMeetingFromDatabase", async (req, res) => {
+  console.log("Received deleteMeetingFromDatabase request with body: ", req.body);
+
+  try {
+    const user = await UserMeeting.deleteOne({ MeetingId: req.body.meetingId });
+    console.log("USER after deleting: ", user)
+    if (!user) {
+      return res.send({
+        status: "error",
+        details: "Meeting Cannot be deleted",
+      });
+    }
+    return res.send({
+      status: "ok",
+      details: "Meeting Deleted",
     });
   } catch (error) {
     res.send({

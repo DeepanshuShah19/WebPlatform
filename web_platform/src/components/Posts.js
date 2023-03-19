@@ -10,7 +10,8 @@ import {
   Paper,
   Box,
 } from "@mui/material";
-import { getUserMeetings } from "../utils/apiCalls"
+import Button from "@mui/material/Button";
+import { getUserMeetings, deleteMeeting } from "../utils/apiCalls"
 
 class Posts extends Component {
   constructor(props) {
@@ -39,12 +40,21 @@ class Posts extends Component {
     };
   }
 
-  componentDidMount= async () => {
+  componentDidMount = async () => {
     let userMeeting = await getUserMeetings("shah8y@uwindsor.ca")
     console.log("userMeetings: ",userMeeting)
     //saving in this.state.posts
   }
 
+  deleteMeeting = async () => {
+    let deleteMeetingResponse = await deleteMeeting("91752741949")
+    if (deleteMeetingResponse === "ok") {
+      console.log("Meeting Deleted")
+    } else {
+      console.log("Cannot delete this meeting")
+    }
+    //call get user meeting again and update this.state.posts
+  }
   render() {
     return (
       <>
@@ -94,7 +104,14 @@ class Posts extends Component {
                 List of Meetings
               </Typography>
               <Grid container spacing={1} sx={{ paddingTop: 1 }}>
-                {this.state.posts.map((post, index) => (
+              <Button
+                  fullWidth
+                  sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
+                  variant="contained" onClick={this.deleteMeeting}
+                >
+                  Delete meeting
+                </Button>
+                {/* {this.state.posts.map((post, index) => (
                   <Grid item xs={12}>
                     <Card
                       key={index}
@@ -128,7 +145,7 @@ class Posts extends Component {
                       </CardContent>
                     </Card>
                   </Grid>
-                ))}
+                ))} */}
               </Grid>
             </Box>
           </Grid>

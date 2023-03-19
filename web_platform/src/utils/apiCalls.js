@@ -240,3 +240,52 @@ export const getUserMeetings = async (emailId) => {
     }
     return null;
 }
+
+export const deleteMeeting = async (meetingId) => {
+    console.log("In deleteMeeting function")
+    const requestBody = JSON.stringify({
+        meetingId: meetingId
+    });
+
+    const options = {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: requestBody
+    };
+
+    try {
+        let status;
+        await fetch(API_URL + "deleteMeeting", options)
+            .then((res) => res.json())
+            .then((data) => {
+                status = data.status;
+            });
+
+        if (status === "ok") {
+            //delete meeting from database
+            let deleteStatus;
+            await fetch(API_URL + "deleteMeetingFromDatabase", options)
+                .then((res) => res.json())
+                .then((data) => {
+                    deleteStatus = data.status;
+                });
+            if (deleteStatus === "ok") {
+                console.log("Meeting Deleted from database")
+                return deleteStatus
+            } else {
+                console.log("Error while deleting meeting from database")
+                return deleteStatus
+            }
+        } else {
+            return status;
+        }
+    } catch (err) {
+        console.error('Error while getting all tasks.', err);
+    }
+    return null;
+}
