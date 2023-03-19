@@ -15,7 +15,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { createMeeting } from "../utils/apiCalls";
+import { createMeeting, saveMeeting } from "../utils/apiCalls";
 
 class Scheduler extends Component {
   constructor(props) {
@@ -49,8 +49,16 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
+    console.log("attendee: ",this.state.emails)
     let createMeetingResponse = await createMeeting("shah8y@uwindsor.ca", "test", "123465413")
     console.log("createMeetingResponse ", createMeetingResponse)
+
+    let saveMeetingResponse = await saveMeeting("shah8y@uwindsor.ca", "test", createMeetingResponse.join_url, createMeetingResponse.start_url, createMeetingResponse.id)
+    if (saveMeetingResponse === "ok") {
+      console.log("Saved in database")
+    } else {
+      console.log("error while saving")
+    }
   }
 
   render() {

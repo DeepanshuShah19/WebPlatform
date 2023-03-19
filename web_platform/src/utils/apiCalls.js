@@ -158,3 +158,47 @@ export const createMeeting = async (emailId, topic, time) => {
     }
     return null;
 }
+
+export const saveMeeting = async (emailId, topic, joinURL, startURL, meetingId, listOfAttendee) => {
+    console.log("In saveMeeting function")
+    console.log("List of Attendee: ", listOfAttendee)
+    const requestBody = JSON.stringify({
+        emailId: emailId,
+        topic: topic,
+        joinURL: joinURL,
+        startURL: startURL,
+        meetingId: meetingId,
+    });
+
+    // console.log('stringified request: ', requestBody);
+
+    const options = {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: requestBody
+    };
+
+    try {
+        let status;
+        let details;
+        await fetch(API_URL + "saveMeeting", options)
+            .then((res) => res.json())
+            .then((data) => {
+                status = data.status;
+                details = data.details;
+            });
+        if (status === "ok") {
+            return status;
+        } else {
+            return details;
+        }
+    } catch (err) {
+        console.error('Error while getting all tasks.', err);
+    }
+    return null;
+}

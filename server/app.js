@@ -207,3 +207,33 @@ app.post("/createMeeting", async (req, res) => {
       })
     });
 })
+
+//saving user created meeting in database
+require("./UserMeeting");
+const UserMeeting = mongoose.model("UserMeeting");
+
+//register API
+app.post("/saveMeeting", async (req, res) => {
+  console.log("Received Register request with body: ", req.body);
+
+  try {
+    await UserMeeting.create({
+      EmailId: req.body.emailId,
+      Topic: req.body.topic,
+      Join_URL: req.body.joinURL,
+      Start_URL: req.body.startURL,
+      MeetingId: req.body.meetingId,
+      Attendee: ["css", "javascript", "mongoose", "node"]
+    });
+    console.log("Meeting saved in dastabase ");
+    res.send({
+      status: "ok",
+      details: "New Meeting Saved.",
+    });
+  } catch (error) {
+    res.send({
+      status: "error",
+      details: "Something went wrong.",
+    });
+  }
+});
