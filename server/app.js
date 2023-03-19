@@ -54,8 +54,8 @@ app.post("/post", async (req, res) => {
   }
 });
 
+//importing schema for saving user and extracting user details while registration and login
 require("./UserDetails");
-
 const User = mongoose.model("UserDetails");
 
 //register API
@@ -208,13 +208,13 @@ app.post("/createMeeting", async (req, res) => {
     });
 })
 
-//saving user created meeting in database
+// importing schema for saving user meetiungs and extracting user meetings
 require("./UserMeeting");
 const UserMeeting = mongoose.model("UserMeeting");
 
-//register API
+//save meeting API
 app.post("/saveMeeting", async (req, res) => {
-  console.log("Received Register request with body: ", req.body);
+  console.log("Received save meeting request with body: ", req.body);
 
   try {
     await UserMeeting.create({
@@ -229,6 +229,31 @@ app.post("/saveMeeting", async (req, res) => {
     res.send({
       status: "ok",
       details: "New Meeting Saved.",
+    });
+  } catch (error) {
+    res.send({
+      status: "error",
+      details: "Something went wrong.",
+    });
+  }
+});
+
+//extract all user meetings
+app.post("/getUserMeetings", async (req, res) => {
+  console.log("Received getUserMeetings request with body: ", req.body);
+
+  try {
+    const meetings = await UserMeeting.find({ EmailId: req.body.emailId });
+    console.log("meetings: ",meetings)
+    if (!meetings) {
+      return res.send({
+        status: "error",
+        details: "No meetings for user",
+      });
+    }
+    return res.send({
+      status: "ok",
+      meetings: meetings,
     });
   } catch (error) {
     res.send({

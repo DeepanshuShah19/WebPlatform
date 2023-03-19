@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Nav from "./NavBar";
-
 import {
   Card,
   CardContent,
@@ -11,6 +10,7 @@ import {
   Paper,
   Box,
 } from "@mui/material";
+import { getUserMeetings } from "../utils/apiCalls"
 
 class Posts extends Component {
   constructor(props) {
@@ -38,6 +38,13 @@ class Posts extends Component {
       ],
     };
   }
+
+  componentDidMount= async () => {
+    let userMeeting = await getUserMeetings("shah8y@uwindsor.ca")
+    console.log("userMeetings: ",userMeeting)
+    //saving in this.state.posts
+  }
+
   render() {
     return (
       <>
