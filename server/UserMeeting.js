@@ -8,7 +8,7 @@ const userMeetingSchema = new mongoose.Schema(
         Start_URL: String,
         MeetingId: String,
         Attendee: [{
-            type: String
+            type: String,
         }]
     },
     {
