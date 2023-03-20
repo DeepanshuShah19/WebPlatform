@@ -174,7 +174,7 @@ class Register extends Component {
     return (
       <>
         {this.state.registrationSuccess ? (
-          (window.location.href = "./phone-verification")
+          (window.location.href = "./login")
         ) : (
           <>
             <ThemeProvider theme={theme}>
