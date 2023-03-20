@@ -19,7 +19,7 @@ class NavBar extends Component {
   render() {
     return (
       <Box
-        position="fixed"
+        // position="absolute"
         top={0}
         left={0}
         right={0}
