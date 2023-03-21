@@ -23,7 +23,7 @@ class Scheduler extends Component {
     this.state = {
       value: "",
       emails: [],
-      meetingCreated: false,
+      meetingCreated: false;
     };
   }
 
@@ -50,6 +50,7 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
+
     console.log("attendee: ", this.state.emails);
     let createMeetingResponse = await createMeeting(
       "shah8y@uwindsor.ca",
@@ -66,11 +67,13 @@ class Scheduler extends Component {
       createMeetingResponse.id
     );
     if (saveMeetingResponse === "ok") {
+
       console.log("Saved in database");
       alert("Meeting Created");
       this.setState({
         meetingCreated: true,
       });
+
     } else {
       console.log("error while saving");
     }
@@ -83,6 +86,7 @@ class Scheduler extends Component {
         {this.state.meetingCreated ? (
           (window.location.href = "./home")
         ) : (
+
           <>
             <Nav />
             <Grid
@@ -126,11 +130,13 @@ class Scheduler extends Component {
                     alignItems: "center",
                   }}
                 >
+
                   <Typography
                     component="h1"
                     sx={{ color: "gray" }}
                     variant="h5"
                   >
+
                     Create a Meeting
                   </Typography>
                   <Box
@@ -211,6 +217,7 @@ class Scheduler extends Component {
                       </Grid>
                     </Grid>
 
+
                     <Button
                       fullWidth
                       sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
@@ -225,6 +232,7 @@ class Scheduler extends Component {
             </Grid>
           </>
         )}
+
       </>
     );
   }

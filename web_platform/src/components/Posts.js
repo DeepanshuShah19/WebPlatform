@@ -59,6 +59,7 @@ class Posts extends Component {
   deleteMeeting = async (meetingId) => {
     console.log(meetingId);
     let deleteMeetingResponse = await deleteMeeting(meetingId);
+
     if (deleteMeetingResponse === "ok") {
       console.log("Meeting Deleted");
     } else {
