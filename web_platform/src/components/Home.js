@@ -31,7 +31,8 @@ class Home extends Component {
                 container
                 component="main"
                 sx={{
-                  // marginTop: 8,
+                  // mt:10,
+                  // padding:10,
                   height: "100vh",
                   background:
                     "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",

@@ -49,17 +49,27 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
-    console.log("attendee: ",this.state.emails)
-    let createMeetingResponse = await createMeeting("shah8y@uwindsor.ca", "test", "123465413")
-    console.log("createMeetingResponse ", createMeetingResponse)
+    console.log("attendee: ", this.state.emails);
+    let createMeetingResponse = await createMeeting(
+      "shah8y@uwindsor.ca",
+      "test",
+      "123465413"
+    );
+    console.log("createMeetingResponse ", createMeetingResponse);
 
-    let saveMeetingResponse = await saveMeeting("shah8y@uwindsor.ca", "test", createMeetingResponse.join_url, createMeetingResponse.start_url, createMeetingResponse.id)
+    let saveMeetingResponse = await saveMeeting(
+      "shah8y@uwindsor.ca",
+      "test",
+      createMeetingResponse.join_url,
+      createMeetingResponse.start_url,
+      createMeetingResponse.id
+    );
     if (saveMeetingResponse === "ok") {
-      console.log("Saved in database")
+      console.log("Saved in database");
     } else {
-      console.log("error while saving")
+      console.log("error while saving");
     }
-  }
+  };
 
   render() {
     return (
@@ -70,6 +80,8 @@ class Scheduler extends Component {
           component="main"
           sx={{
             height: "100vh",
+            padding: 10,
+            top: "4",
             background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -190,7 +202,8 @@ class Scheduler extends Component {
                 <Button
                   fullWidth
                   sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
-                  variant="contained" onClick={this.scheduleMeeting}
+                  variant="contained"
+                  onClick={this.scheduleMeeting}
                 >
                   Schedule a Meeting
                 </Button>
