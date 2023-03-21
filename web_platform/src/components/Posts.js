@@ -23,27 +23,27 @@ class Posts extends Component {
     super(props);
     this.state = {
       posts: [
-        {
-          title: "Meeting 1",
-          link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-          date: "March 1, 2023",
-          attendee: ["apple@gmail.com", "banana@gmail.com"],
-          time: "12:00 PM",
-        },
-        {
-          title: "Meeting 2",
-          link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-          date: "March 2, 2023",
-          attendee: ["apple@gmail.com", "banana@gmail.com"],
-          time: "12:00 PM",
-        },
-        {
-          title: "Meeting 3",
-          link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-          date: "March 3, 2023",
-          attendee: ["apple@gmail.com", "banana@gmail.com"],
-          time: "12:00 PM",
-        },
+        // {
+        //   title: "Meeting 1",
+        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
+        //   date: "March 1, 2023",
+        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
+        //   time: "12:00 PM",
+        // },
+        // {
+        //   title: "Meeting 2",
+        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
+        //   date: "March 2, 2023",
+        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
+        //   time: "12:00 PM",
+        // },
+        // {
+        //   title: "Meeting 3",
+        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
+        //   date: "March 3, 2023",
+        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
+        //   time: "12:00 PM",
+        // },
       ],
     };
   }
@@ -52,10 +52,14 @@ class Posts extends Component {
     let userMeeting = await getUserMeetings("shah8y@uwindsor.ca");
     console.log("userMeetings: ", userMeeting);
     //saving in this.state.posts
+    this.setState({ posts: userMeeting });
+    console.log("Posts", this.state.posts, this.state.posts.length);
   };
 
-  deleteMeeting = async () => {
-    let deleteMeetingResponse = await deleteMeeting("95081144053");
+  deleteMeeting = async (meetingId) => {
+    console.log(meetingId);
+    let deleteMeetingResponse = await deleteMeeting(meetingId);
+
     if (deleteMeetingResponse === "ok") {
       console.log("Meeting Deleted");
     } else {
@@ -72,7 +76,9 @@ class Posts extends Component {
           component="main"
           sx={{
             height: "100vh",
-            width: "100%",
+            padding: 10,
+            top: "4",
+            // width: "100%",
             background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -91,6 +97,7 @@ class Posts extends Component {
           <Grid
             sx={{
               padding: 1,
+              maxWidth: "fitContent",
             }}
             item
             xs={12}
@@ -109,6 +116,8 @@ class Posts extends Component {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                // maxWidth: "fitContent",
+                // width:"60%"
               }}
             >
               <Typography component="h1" sx={{ color: "gray" }} variant="h5">
@@ -117,7 +126,10 @@ class Posts extends Component {
               <Grid
                 container
                 spacing={1}
-                sx={{ paddingTop: 1, justifyContent: "center" }}
+                sx={{
+                  paddingTop: 1,
+                  justifyContent: "center",
+                }}
               >
                 {/* <Button
                   fullWidth
@@ -132,7 +144,7 @@ class Posts extends Component {
                       key={index}
                       sx={{
                         // border: "1px Solid gray",
-                        minWidth: 275,
+                        // width: "60%",
                         margin: "10px",
                       }}
                     >
@@ -153,11 +165,11 @@ class Posts extends Component {
                               }}
                               gutterBottom
                             >
-                              {post.title}
+                              {post.Topic}
                             </Typography>
                           </Grid>
                           <Grid item xs={12} sx={{ paddin: "4px" }}>
-                            <Link href={post.link}>{post.link}</Link>
+                            <Link href={post.Join_URL}>{post.Join_URL}</Link>
                           </Grid>
                           <Grid item xs={12} sx={{ padding: "4px" }}>
                             {" "}
@@ -167,7 +179,8 @@ class Posts extends Component {
                                 color: "gray",
                               }}
                             >
-                              {post.date} {post.time}
+                              {/* {post.date} {post.time} */}
+                              {post.MeetingId}
                             </Typography>
                           </Grid>
                           <Grid item xs={12}>
@@ -178,7 +191,7 @@ class Posts extends Component {
                               }}
                             > */}
                             <Stack direction="row" spacing={2}>
-                              {post.attendee.map((email, index) => (
+                              {post.Attendee.map((email, index) => (
                                 <Chip
                                   key={index}
                                   variant="contatined"
@@ -192,12 +205,18 @@ class Posts extends Component {
                             {/* </Typography> */}
                           </Grid>
                           <Grid item xs={12}>
-                            <Stack direction="row" spacing={2} sx={{ paddingTop: "1rem" }}>
+                            <Stack
+                              direction="row"
+                              spacing={2}
+                              sx={{ paddingTop: "1rem" }}
+                            >
                               <Button
                                 variant="outlined"
                                 startIcon={<DeleteIcon />}
                                 color="error"
-                                onClick={this.deleteMeeting}
+                                onClick={() =>
+                                  this.deleteMeeting(post.MeetingId)
+                                }
                               >
                                 Delete Meeting
                               </Button>
