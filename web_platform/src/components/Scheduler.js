@@ -23,7 +23,7 @@ class Scheduler extends Component {
     this.state = {
       value: "",
       emails: [],
-      meetingCreated: false;
+      meetingCreated: false,
     };
   }
 
