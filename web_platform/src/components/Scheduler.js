@@ -23,6 +23,7 @@ class Scheduler extends Component {
     this.state = {
       value: "",
       emails: [],
+      meetingCreated: false,
     };
   }
 
@@ -66,6 +67,10 @@ class Scheduler extends Component {
     );
     if (saveMeetingResponse === "ok") {
       console.log("Saved in database");
+      alert("Meeting Created");
+      this.setState({
+        meetingCreated: true,
+      });
     } else {
       console.log("error while saving");
     }
@@ -73,144 +78,291 @@ class Scheduler extends Component {
 
   render() {
     return (
-      <>
-        <Nav />
-        <Grid
-          container
-          component="main"
-          sx={{
-            height: "100vh",
-            padding: 10,
-            top: "4",
-            background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+      // <>
+      //   <Nav />
+      //   <Grid
+      //     container
+      //     component="main"
+      //     sx={{
+      //       height: "100vh",
+      //       padding: 10,
+      //       top: "4",
+      //       background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
+      //       backgroundRepeat: "no-repeat",
+      //       backgroundColor: (t) =>
+      //         t.palette.mode === "light"
+      //           ? t.palette.grey[50]
+      //           : t.palette.grey[900],
+      //       backgroundSize: "cover",
+      //       backgroundPosition: "center",
 
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <CssBaseline />
-          <Grid
-            sx={{ padding: 1 }}
-            item
-            xs={8}
-            sm={4}
-            md={3}
-            component={Paper}
-            elevation={10}
-            squares
-          >
-            <Box
+      //       display: "flex",
+      //       flexDirection: "column",
+      //       justifyContent: "center",
+      //       alignItems: "center",
+      //     }}
+      //   >
+      //     <CssBaseline />
+      //     <Grid
+      //       sx={{ padding: 1 }}
+      //       item
+      //       xs={8}
+      //       sm={4}
+      //       md={3}
+      //       component={Paper}
+      //       elevation={10}
+      //       squares
+      //     >
+      //       <Box
+      //         sx={{
+      //           // border: "1px solid black",
+      //           padding: 1,
+      //           marginTop: 3,
+      //           display: "flex",
+      //           flexDirection: "column",
+      //           alignItems: "center",
+      //         }}
+      //       >
+      //         <Typography component="h1" sx={{ color: "gray" }} variant="h5">
+      //           Create a Meeting
+      //         </Typography>
+      //         <Box
+      //           component="form"
+      //           sx={{
+      //             // border: "1px solid black",
+      //             my: 3,
+      //             paddingLeft: 3,
+      //             paddingRight: 3,
+      //           }}
+      //         >
+      //           <Grid container spacing={1} sx={{ paddingTop: 1 }}>
+      //             <Grid item xs={12}>
+      //               <TextField
+      //                 fullWidth
+      //                 id="title"
+      //                 required
+      //                 label="Meeting Subject"
+      //                 type="text"
+      //                 onChange={this.handleChange}
+      //                 autoFocus
+      //               />
+      //             </Grid>
+      //             <Grid item xs={12}>
+      //               <TextField
+      //                 fullWidth
+      //                 id="email"
+      //                 required
+      //                 value={this.state.value}
+      //                 onChange={this.handleChange}
+      //                 onKeyPress={this.handleKeyPress}
+      //                 label="Attendee Email Address"
+      //                 type="text"
+      //                 autoFocus
+      //               />
+      //               {this.state.emails.map((email, index) => (
+      //                 <Chip
+      //                   key={index}
+      //                   label={email}
+      //                   onDelete={() => this.handleDelete(index)}
+      //                   avatar={<Avatar>{email[0]}</Avatar>}
+      //                   style={{ margin: "4px" }}
+      //                 />
+      //               ))}
+      //             </Grid>
+      //             <Grid item xs={12}>
+      //               <LocalizationProvider dateAdapter={AdapterDayjs}>
+      //                 <DemoContainer components={["DatePicker"]}>
+      //                   <DemoItem>
+      //                     <DatePicker
+      //                       label="Select a Date"
+      //                       required
+      //                       onChange={this.handleChange}
+      //                       autoFocus
+      //                     />
+      //                   </DemoItem>
+      //                 </DemoContainer>
+      //               </LocalizationProvider>
+      //             </Grid>
+      //             <Grid item xs={12}>
+      //               <LocalizationProvider dateAdapter={AdapterDayjs}>
+      //                 <DemoContainer components={["TimePicker"]}>
+      //                   <DemoItem>
+      //                     <TimePicker
+      //                       disablePast
+      //                       label="Pick a Time"
+      //                       // sx={{
+      //                       //   width: "22rem",
+      //                       // }}
+      //                       fullWidth
+      //                       required
+      //                       autoFocus
+      //                       onChange={this.handleChange}
+      //                     />
+      //                   </DemoItem>
+      //                 </DemoContainer>
+      //               </LocalizationProvider>
+      //             </Grid>
+      //           </Grid>
+
+      //           <Button
+      //             fullWidth
+      //             sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
+      //             variant="contained"
+      //             onClick={this.scheduleMeeting}
+      //           >
+      //             Schedule a Meeting
+      //           </Button>
+      //         </Box>
+      //       </Box>
+      //     </Grid>
+      //   </Grid>
+      // </>
+      <>
+        {this.state.meetingCreated ? (
+          (window.location.href = "./home")
+        ) : (
+          <>
+            <Nav />
+            <Grid
+              container
+              component="main"
               sx={{
-                // border: "1px solid black",
-                padding: 1,
-                marginTop: 3,
+                height: "100vh",
+                background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
+                backgroundRepeat: "no-repeat",
+                backgroundColor: (t) =>
+                  t.palette.mode === "light"
+                    ? t.palette.grey[50]
+                    : t.palette.grey[900],
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+
                 display: "flex",
                 flexDirection: "column",
+                justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <Typography component="h1" sx={{ color: "gray" }} variant="h5">
-                Create a Meeting
-              </Typography>
-              <Box
-                component="form"
-                sx={{
-                  // border: "1px solid black",
-                  my: 3,
-                  paddingLeft: 3,
-                  paddingRight: 3,
-                }}
+              <CssBaseline />
+              <Grid
+                sx={{ padding: 1 }}
+                item
+                xs={8}
+                sm={4}
+                md={3}
+                component={Paper}
+                elevation={10}
+                squares
               >
-                <Grid container spacing={1} sx={{ paddingTop: 1 }}>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      id="title"
-                      required
-                      label="Meeting Subject"
-                      type="text"
-                      onChange={this.handleChange}
-                      autoFocus
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      id="email"
-                      required
-                      value={this.state.value}
-                      onChange={this.handleChange}
-                      onKeyPress={this.handleKeyPress}
-                      label="Attendee Email Address"
-                      type="text"
-                      autoFocus
-                    />
-                    {this.state.emails.map((email, index) => (
-                      <Chip
-                        key={index}
-                        label={email}
-                        onDelete={() => this.handleDelete(index)}
-                        avatar={<Avatar>{email[0]}</Avatar>}
-                        style={{ margin: "4px" }}
-                      />
-                    ))}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={["DatePicker"]}>
-                        <DemoItem>
-                          <DatePicker
-                            label="Select a Date"
-                            required
-                            onChange={this.handleChange}
-                            autoFocus
-                          />
-                        </DemoItem>
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={["TimePicker"]}>
-                        <DemoItem>
-                          <TimePicker
-                            disablePast
-                            label="Pick a Time"
-                            // sx={{
-                            //   width: "22rem",
-                            // }}
-                            fullWidth
-                            required
-                            autoFocus
-                            onChange={this.handleChange}
-                          />
-                        </DemoItem>
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Grid>
-                </Grid>
-
-                <Button
-                  fullWidth
-                  sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
-                  variant="contained"
-                  onClick={this.scheduleMeeting}
+                <Box
+                  sx={{
+                    // border: "1px solid black",
+                    padding: 1,
+                    marginTop: 3,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
                 >
-                  Schedule a Meeting
-                </Button>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
+                  <Typography
+                    component="h1"
+                    sx={{ color: "gray" }}
+                    variant="h5"
+                  >
+                    Create a Meeting
+                  </Typography>
+                  <Box
+                    component="form"
+                    sx={{
+                      // border: "1px solid black",
+                      my: 3,
+                      paddingLeft: 3,
+                      paddingRight: 3,
+                    }}
+                  >
+                    <Grid container spacing={1} sx={{ paddingTop: 1 }}>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          id="title"
+                          required
+                          label="Meeting Subject"
+                          type="text"
+                          onChange={this.handleChange}
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          id="email"
+                          required
+                          value={this.state.value}
+                          onChange={this.handleChange}
+                          onKeyPress={this.handleKeyPress}
+                          label="Attendee Email Address"
+                          type="text"
+                          autoFocus
+                        />
+                        {this.state.emails.map((email, index) => (
+                          <Chip
+                            key={index}
+                            label={email}
+                            onDelete={() => this.handleDelete(index)}
+                            avatar={<Avatar>{email[0]}</Avatar>}
+                            style={{ margin: "4px" }}
+                          />
+                        ))}
+                      </Grid>
+                      <Grid item xs={12}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DemoContainer components={["DatePicker"]}>
+                            <DemoItem>
+                              <DatePicker
+                                label="Select a Date"
+                                required
+                                onChange={this.handleChange}
+                                autoFocus
+                              />
+                            </DemoItem>
+                          </DemoContainer>
+                        </LocalizationProvider>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DemoContainer components={["TimePicker"]}>
+                            <DemoItem>
+                              <TimePicker
+                                disablePast
+                                label="Pick a Time"
+                                // sx={{
+                                //   width: "22rem",
+                                // }}
+                                fullWidth
+                                required
+                                autoFocus
+                                onChange={this.handleChange}
+                              />
+                            </DemoItem>
+                          </DemoContainer>
+                        </LocalizationProvider>
+                      </Grid>
+                    </Grid>
+
+                    <Button
+                      fullWidth
+                      sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
+                      variant="contained"
+                      onClick={this.scheduleMeeting}
+                    >
+                      Schedule a Meeting
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+          </>
+        )}
       </>
     );
   }
