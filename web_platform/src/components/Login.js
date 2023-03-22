@@ -63,10 +63,9 @@ class Login extends Component {
   };
 
   handleSuccessfulGoogleLogin = async (response) => {
-    // e.preventDefault();
-    console.log(response);
+    // console.log(response);
     const userDetails = jwt_decode(response.credential);
-    console.log(userDetails);
+    // console.log(userDetails);
     let loginStatus = await handleGoogleLogin(userDetails);
     if (loginStatus === "ok") {
       this.setState({ loginSuccess: true });
@@ -109,9 +108,9 @@ class Login extends Component {
                     <CssBaseline />
                     <Grid
                       item
-                      xs={8}
-                      sm={4}
-                      md={3}
+                      xs={10}
+                      sm={8}
+                      md={4}
                       component={Paper}
                       elevation={10}
                       square

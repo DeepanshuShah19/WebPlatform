@@ -11,7 +11,6 @@ import {
   Box,
   Stack,
   Chip,
-  Avatar,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { getUserMeetings, deleteMeeting } from "../utils/apiCalls";
@@ -22,29 +21,7 @@ class Posts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [
-        // {
-        //   title: "Meeting 1",
-        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-        //   date: "March 1, 2023",
-        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
-        //   time: "12:00 PM",
-        // },
-        // {
-        //   title: "Meeting 2",
-        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-        //   date: "March 2, 2023",
-        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
-        //   time: "12:00 PM",
-        // },
-        // {
-        //   title: "Meeting 3",
-        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-        //   date: "March 3, 2023",
-        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
-        //   time: "12:00 PM",
-        // },
-      ],
+      posts: [],
     };
   }
 
@@ -78,7 +55,6 @@ class Posts extends Component {
             height: "100vh",
             padding: 10,
             top: "4",
-            // width: "100%",
             background: "linear-gradient(135deg, #c89abc 0%, #99c7a5 100%)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -97,32 +73,43 @@ class Posts extends Component {
           <Grid
             sx={{
               padding: 1,
-              maxWidth: "fitContent",
+              width: "fitContent",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
-            item
-            xs={12}
-            sm={8}
-            md={4}
+            container
+            xs={4}
+            md={6}
+            sm={10}
             component={Paper}
             elevation={10}
             squares
           >
+            <Typography
+              component="h1"
+              sx={{
+                color: "gray",
+                marginRight: "auto",
+                marginLeft: "auto",
+                marginTop: "2rem",
+              }}
+              variant="h5"
+            >
+              LIST OF MEETINGS
+            </Typography>
             <Box
               sx={{
-                // border: "1px solid black",
-                padding: 1,
-                marginTop: 3,
+                // border: "1px solid gray",
+                padding: "1rem",
+
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                // maxWidth: "fitContent",
-                // width:"60%"
+                width: "100%",
               }}
             >
-              <Typography component="h1" sx={{ color: "gray" }} variant="h5">
-                List of Meetings
-              </Typography>
               <Grid
                 container
                 spacing={1}
@@ -131,108 +118,109 @@ class Posts extends Component {
                   justifyContent: "center",
                 }}
               >
-                {/* <Button
-                  fullWidth
-                  sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
-                  variant="contained" onClick={this.deleteMeeting}
-                >
-                  Delete meeting
-                </Button> */}
-                {this.state.posts.map((post, index) => (
-                  <Grid item>
-                    <Card
-                      key={index}
-                      sx={{
-                        // border: "1px Solid gray",
-                        // width: "60%",
-                        margin: "10px",
-                      }}
-                    >
-                      <CardContent
+                {this.state.posts.length > 0 ? (
+                  this.state.posts.map((post, index) => (
+                    <Grid item>
+                      <Card
+                        key={index}
                         sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "flexStart",
+                          border: "1px Solid gray",
+                          margin: "10px",
                         }}
                       >
-                        <Grid container>
-                          <Grid item xs={12}>
-                            <Typography
-                              sx={{
-                                fontSize: 18,
-                                fontWeight: "bold",
-                                marginBottom: "10px",
-                              }}
-                              gutterBottom
-                            >
-                              {post.Topic}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={12} sx={{ paddin: "4px" }}>
-                            <Link href={post.Join_URL}>{post.Join_URL}</Link>
-                          </Grid>
-                          <Grid item xs={12} sx={{ padding: "4px" }}>
-                            {" "}
-                            <Typography
-                              sx={{
-                                fontSize: 14,
-                                color: "gray",
-                              }}
-                            >
-                              {/* {post.date} {post.time} */}
-                              {post.MeetingId}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={12}>
-                            {/* <Typography
-                              sx={{
-                                fontSize: 14,
-                                color: "gray",
-                              }}
-                            > */}
-                            <Stack direction="row" spacing={2}>
-                              {post.Attendee.map((email, index) => (
-                                <Chip
-                                  key={index}
-                                  variant="contatined"
-                                  label={email}
-                                  // avatar={<Avatar>{email[0]}</Avatar>}
-                                  style={{ marginBottom: "0.5rem" }}
-                                />
-                              ))}
-                            </Stack>
-                            {/* Atendee */}
-                            {/* </Typography> */}
-                          </Grid>
-                          <Grid item xs={12}>
-                            <Stack
-                              direction="row"
-                              spacing={2}
-                              sx={{ paddingTop: "1rem" }}
-                            >
-                              <Button
-                                variant="outlined"
-                                startIcon={<DeleteIcon />}
-                                color="error"
-                                onClick={() =>
-                                  this.deleteMeeting(post.MeetingId)
-                                }
+                        <CardContent
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "flexStart",
+                          }}
+                        >
+                          <Grid container>
+                            <Grid item xs={12}>
+                              <Typography
+                                sx={{
+                                  fontSize: 18,
+                                  fontWeight: "bold",
+                                  marginBottom: "10px",
+                                }}
+                                gutterBottom
                               >
-                                Delete Meeting
-                              </Button>
-                              <Button
-                                variant="contained"
-                                endIcon={<SendIcon />}
+                                {post.Topic}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={12} sx={{ paddin: "4px" }}>
+                              <Link href={post.Join_URL}>{post.Join_URL}</Link>
+                            </Grid>
+                            <Grid item xs={12} sx={{ padding: "4px" }}>
+                              {" "}
+                              <Typography
+                                sx={{
+                                  fontSize: 14,
+                                  color: "gray",
+                                }}
                               >
-                                Send Invitation
-                              </Button>
-                            </Stack>
+                                {post.MeetingId}
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Stack direction="row" spacing={2}>
+                                {post.Attendee.map((email, index) => (
+                                  <Chip
+                                    key={index}
+                                    variant="contatined"
+                                    label={email}
+                                    style={{ marginBottom: "0.5rem" }}
+                                  />
+                                ))}
+                              </Stack>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                sx={{ paddingTop: "1rem" }}
+                              >
+                                <Button
+                                  variant="outlined"
+                                  startIcon={<DeleteIcon />}
+                                  color="error"
+                                  onClick={() =>
+                                    this.deleteMeeting(post.MeetingId)
+                                  }
+                                >
+                                  Delete Meeting
+                                </Button>
+                                <Button
+                                  variant="contained"
+                                  endIcon={<SendIcon />}
+                                >
+                                  Send Invitation
+                                </Button>
+                              </Stack>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))
+                ) : (
+                  <Typography
+                    component="body1"
+                    variant="span"
+                    sx={{
+                      fontSize: "1rem",
+                      color: "gray",
+                      paddingTop: 1,
+                    }}
+                  >
+                    You have no meeting as of now. Please schedule meeting to
+                    view it.
+                    <Link href="/scheduler" variant="body2">
+                      {}
+                      {"Click here to Create a Meeting..."}
+                    </Link>
+                  </Typography>
+                )}
               </Grid>
             </Box>
           </Grid>

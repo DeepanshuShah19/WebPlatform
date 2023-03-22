@@ -95,7 +95,6 @@ class PhoneVerification extends Component {
                     fullWidth
                     sx={{ mt: 3, mb: 2 }}
                     variant="contained"
-                    // onClick={this.handleLogin}
                     disabled={!this.state.isFormvalid}
                   >
                     Verify Account

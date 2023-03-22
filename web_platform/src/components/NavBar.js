@@ -8,12 +8,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 class NavBar extends Component {
   navToLoginPage = (e) => {
     e.preventDefault();
-    // navigate("/login");
   };
 
   navToRegisterPage = (e) => {
     e.preventDefault();
-    // navigate("/register");
   };
 
   render() {
@@ -73,7 +71,6 @@ class NavBar extends Component {
                   }}
                   variant="outlined"
                   className="nav_button__login"
-                  // onClick={navToLoginPage}
                 >
                   <LogoutIcon
                     style={{

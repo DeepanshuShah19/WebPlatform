@@ -3,13 +3,10 @@ import Nav from "./NavBar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Typography, Chip, Avatar } from "@mui/material";
-
-import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -50,7 +47,6 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
-
     console.log("attendee: ", this.state.emails);
     let createMeetingResponse = await createMeeting(
       "shah8y@uwindsor.ca",
@@ -67,13 +63,11 @@ class Scheduler extends Component {
       createMeetingResponse.id
     );
     if (saveMeetingResponse === "ok") {
-
       console.log("Saved in database");
       alert("Meeting Created");
       this.setState({
         meetingCreated: true,
       });
-
     } else {
       console.log("error while saving");
     }
@@ -81,12 +75,10 @@ class Scheduler extends Component {
 
   render() {
     return (
-
       <>
         {this.state.meetingCreated ? (
           (window.location.href = "./home")
         ) : (
-
           <>
             <Nav />
             <Grid
@@ -122,7 +114,6 @@ class Scheduler extends Component {
               >
                 <Box
                   sx={{
-                    // border: "1px solid black",
                     padding: 1,
                     marginTop: 3,
                     display: "flex",
@@ -130,19 +121,16 @@ class Scheduler extends Component {
                     alignItems: "center",
                   }}
                 >
-
                   <Typography
                     component="h1"
                     sx={{ color: "gray" }}
                     variant="h5"
                   >
-
-                    Create a Meeting
+                    CREATE A MEETING
                   </Typography>
                   <Box
                     component="form"
                     sx={{
-                      // border: "1px solid black",
                       my: 3,
                       paddingLeft: 3,
                       paddingRight: 3,
@@ -217,7 +205,6 @@ class Scheduler extends Component {
                       </Grid>
                     </Grid>
 
-
                     <Button
                       fullWidth
                       sx={{ height: "3rem", marginTop: 3, marginBottom: 3 }}
@@ -232,7 +219,6 @@ class Scheduler extends Component {
             </Grid>
           </>
         )}
-
       </>
     );
   }
