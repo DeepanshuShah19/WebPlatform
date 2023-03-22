@@ -12,9 +12,10 @@ import KeyIcon from "@mui/icons-material/Key";
 import MailIcon from "@mui/icons-material/Mail";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+//Can Create the Custom Design inside the createTheme and apply to the specific section of code
 const theme = createTheme();
 
-class PhoneVerification extends Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +23,7 @@ class PhoneVerification extends Component {
       isFormvalid: false,
     };
   }
+
   render() {
     return (
       <>
@@ -74,6 +76,7 @@ class PhoneVerification extends Component {
                   component="body1"
                   variant="span"
                   sx={{
+                    fontSize: "1rem",
                     color: "gray",
                     paddingTop: 1,
                   }}
@@ -110,7 +113,6 @@ class PhoneVerification extends Component {
                     fullWidth
                     sx={{ mt: 3, mb: 2 }}
                     variant="contained"
-                    // onClick={this.handleLogin}
                     disabled={!this.state.isFormvalid}
                   >
                     Reset Password
@@ -147,4 +149,4 @@ class PhoneVerification extends Component {
   }
 }
 
-export default PhoneVerification;
+export default ForgotPassword;

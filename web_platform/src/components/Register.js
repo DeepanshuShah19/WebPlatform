@@ -13,8 +13,6 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import app from "./FireBaseConfig";
-
-// import "../styles/Register.css";
 import "react-phone-input-2/lib/bootstrap.css";
 import { handleRegistration } from "../utils/apiCalls";
 import Copyright from "./Copyright";
