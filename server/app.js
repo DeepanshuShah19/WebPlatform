@@ -223,7 +223,7 @@ app.post("/saveMeeting", async (req, res) => {
       Join_URL: req.body.joinURL,
       Start_URL: req.body.startURL,
       MeetingId: req.body.meetingId,
-      Attendee: ["css", "javascript", "mongoose", "node"]
+      Attendee: req.body.listOfAttendee
     });
     console.log("Meeting saved in dastabase ");
     res.send({

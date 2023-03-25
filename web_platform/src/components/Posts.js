@@ -22,39 +22,20 @@ class Posts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [
-        // {
-        //   title: "Meeting 1",
-        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-        //   date: "March 1, 2023",
-        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
-        //   time: "12:00 PM",
-        // },
-        // {
-        //   title: "Meeting 2",
-        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-        //   date: "March 2, 2023",
-        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
-        //   time: "12:00 PM",
-        // },
-        // {
-        //   title: "Meeting 3",
-        //   link: "https://us02web.zoom.us/j/83377978843?pwd=NUg0UHlNM1Y0akoxWkFHOXhpWlk2dz09#success",
-        //   date: "March 3, 2023",
-        //   attendee: ["apple@gmail.com", "banana@gmail.com"],
-        //   time: "12:00 PM",
-        // },
-      ],
+      posts: [],
     };
   }
 
   componentDidMount = async () => {
+    this.userMeetings()
+  };
+  
+  userMeetings = async () => {
     let userMeeting = await getUserMeetings("shah8y@uwindsor.ca");
     console.log("userMeetings: ", userMeeting);
-    //saving in this.state.posts
     this.setState({ posts: userMeeting });
     console.log("Posts", this.state.posts, this.state.posts.length);
-  };
+  }
 
   deleteMeeting = async (meetingId) => {
     console.log(meetingId);
@@ -62,10 +43,10 @@ class Posts extends Component {
 
     if (deleteMeetingResponse === "ok") {
       console.log("Meeting Deleted");
+      this.userMeetings()
     } else {
       console.log("Cannot delete this meeting");
     }
-    //call get user meeting again and update this.state.posts
   };
   render() {
     return (

@@ -23,6 +23,9 @@ class Scheduler extends Component {
     this.state = {
       value: "",
       emails: [],
+      title: '',
+      date: '',
+      time: '',
       meetingCreated: false,
     };
   }
@@ -50,8 +53,12 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
-
+    console.log("values: ", this.state.value)
+    console.log("user email: ", this.state.emails);
     console.log("attendee: ", this.state.emails);
+    console.log("title: ", this.state.title);
+    console.log("date: ", this.state.date);
+    console.log("time: ", this.state.time);
     let createMeetingResponse = await createMeeting(
       "shah8y@uwindsor.ca",
       "test",
@@ -187,6 +194,7 @@ class Scheduler extends Component {
                           <DemoContainer components={["DatePicker"]}>
                             <DemoItem>
                               <DatePicker
+                                // id="date"
                                 label="Select a Date"
                                 required
                                 onChange={this.handleChange}
@@ -203,9 +211,7 @@ class Scheduler extends Component {
                               <TimePicker
                                 disablePast
                                 label="Pick a Time"
-                                // sx={{
-                                //   width: "22rem",
-                                // }}
+                                // id="time"
                                 fullWidth
                                 required
                                 autoFocus
