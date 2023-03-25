@@ -179,6 +179,7 @@ export const saveMeeting = async (
     joinURL: joinURL,
     startURL: startURL,
     meetingId: meetingId,
+    listOfAttendee: ["shah8y@uwindsor.ca", "deepanshuyshah@gmail.com"]
   });
 
   // console.log('stringified request: ', requestBody);
