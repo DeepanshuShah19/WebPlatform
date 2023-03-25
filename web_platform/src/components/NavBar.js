@@ -14,6 +14,11 @@ class NavBar extends Component {
     e.preventDefault();
   };
 
+  signOut = async () => {
+    localStorage.removeItem("userEmailId")
+    window.location.href = "./login"
+  }
+  
   render() {
     return (
       <Box
@@ -71,6 +76,7 @@ class NavBar extends Component {
                   }}
                   variant="outlined"
                   className="nav_button__login"
+                  onClick={this.signOut}
                 >
                   <LogoutIcon
                     style={{
