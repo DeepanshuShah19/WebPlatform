@@ -7,6 +7,7 @@ const userMeetingSchema = new mongoose.Schema(
         Join_URL: String,
         Start_URL: String,
         MeetingId: String,
+        Time: String,
         Attendee: [{
             type: String,
         }]

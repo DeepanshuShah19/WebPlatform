@@ -58,34 +58,22 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
-    console.log("user email Id: ",localStorage.getItem('userEmailId'))
-    console.log("Subject:", this.state.meetingSubject);
-    console.log("attendee: ", this.state.emails);
-    console.log("Date", this.state.meetingDate);
-    console.log("Time:", this.state.meetingTime);
-    // let createMeetingResponse = await createMeeting(
-    //   "shah8y@uwindsor.ca",
-    //   "test",
-    //   "123465413"
-    // );
-    // console.log("createMeetingResponse ", createMeetingResponse);
+    let meetTime = this.state.meetingDate.$y + "-" + (this.state.meetingDate.$M+1) + "-" + this.state.meetingDate.$D + "T" + this.state.meetingTime.$H + ":" + this.state.meetingTime.$m + ":00Z"
+    console.log("Meeting Time: ", meetTime)
+    let createMeetingResponse = await createMeeting(localStorage.getItem('userEmailId'),this.state.meetingSubject,meetTime);
+    console.log("createMeetingResponse ", createMeetingResponse);
 
-    // let saveMeetingResponse = await saveMeeting(
-    //   "shah8y@uwindsor.ca",
-    //   "test",
-    //   createMeetingResponse.join_url,
-    //   createMeetingResponse.start_url,
-    //   createMeetingResponse.id
-    // );
-    // if (saveMeetingResponse === "ok") {
-    //   console.log("Saved in database");
-    //   alert("Meeting Created");
-    //   this.setState({
-    //     meetingCreated: true,
-    //   });
-    // } else {
-    //   console.log("error while saving");
-    // }
+    let saveMeetingResponse = await saveMeeting(localStorage.getItem('userEmailId'),this.state.meetingSubject,createMeetingResponse.join_url,
+                                            createMeetingResponse.start_url,createMeetingResponse.id, meetTime, this.state.emails);
+    if (saveMeetingResponse === "ok") {
+      console.log("Saved in database");
+      alert("Meeting Created");
+      this.setState({
+        meetingCreated: true,
+      });
+    } else {
+      console.log("error while saving");
+    }
   };
 
   render() {

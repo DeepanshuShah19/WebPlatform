@@ -26,12 +26,16 @@ class Posts extends Component {
   }
 
   componentDidMount = async () => {
-    let userMeeting = await getUserMeetings("shah8y@uwindsor.ca");
+    this.getUserMeeting();
+  };
+
+  getUserMeeting = async () => {
+    let userMeeting = await getUserMeetings(localStorage.getItem('userEmailId'));
     console.log("userMeetings: ", userMeeting);
     //saving in this.state.posts
     this.setState({ posts: userMeeting });
     console.log("Posts", this.state.posts, this.state.posts.length);
-  };
+  }
 
   deleteMeeting = async (meetingId) => {
     console.log(meetingId);
@@ -39,10 +43,10 @@ class Posts extends Component {
 
     if (deleteMeetingResponse === "ok") {
       console.log("Meeting Deleted");
+      this.getUserMeeting();
     } else {
       console.log("Cannot delete this meeting");
     }
-    //call get user meeting again and update this.state.posts
   };
   render() {
     return (
