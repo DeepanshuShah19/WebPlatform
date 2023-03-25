@@ -19,13 +19,25 @@ class Scheduler extends Component {
     super(props);
     this.state = {
       value: "",
+      meetingSubject: "", // add a new stae variable for meeting subject
       emails: [],
+      meetingDate: null, // add a new state variable for meeting date
+      meetingTime: null, // add a new state variable for meeting time
       meetingCreated: false,
     };
   }
 
   handleChange = async (event) => {
-    this.setState({ value: event.target.value });
+    const { id, value } = event.target; // extract the id and value from the input field
+    this.setState({ [id]: value }); // update the corresponding state variable based on the input field id
+  };
+
+  handleDateChange = async (date) => {
+    this.setState({ meetingDate: date }); // update the meeting date state variable
+  };
+
+  handleTimeChange = async (time) => {
+    this.setState({ meetingTime: time }); // update the meeting time state variable
   };
 
   handleKeyPress = async (event) => {
@@ -47,7 +59,10 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
+    console.log("Subject:", this.state.meetingSubject);
     console.log("attendee: ", this.state.emails);
+    console.log("Date", this.state.meetingDate);
+    console.log("Time:", this.state.meetingTime);
     let createMeetingResponse = await createMeeting(
       "shah8y@uwindsor.ca",
       "test",
@@ -140,7 +155,7 @@ class Scheduler extends Component {
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
-                          id="title"
+                          id="meetingSubject" // update the id to match the state variable name
                           required
                           label="Meeting Subject"
                           type="text"
@@ -151,12 +166,12 @@ class Scheduler extends Component {
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
-                          id="email"
+                          id="value" // update the id to match the state variable name
                           required
+                          label="Attendee Email Address"
                           value={this.state.value}
                           onChange={this.handleChange}
                           onKeyPress={this.handleKeyPress}
-                          label="Attendee Email Address"
                           type="text"
                           autoFocus
                         />
@@ -177,7 +192,8 @@ class Scheduler extends Component {
                               <DatePicker
                                 label="Select a Date"
                                 required
-                                onChange={this.handleChange}
+                                value={this.state.meetingDate} //add the value prop to display the selected date
+                                onChange={this.handleDateChange} // add the onChange prop to update the state variable
                                 autoFocus
                               />
                             </DemoItem>
@@ -196,8 +212,9 @@ class Scheduler extends Component {
                                 // }}
                                 fullWidth
                                 required
+                                value={this.state.meetingTime} // add the value prop to display the selected time
                                 autoFocus
-                                onChange={this.handleChange}
+                                onChange={this.handleTimeChange} // add the onChange prop to update the state variable
                               />
                             </DemoItem>
                           </DemoContainer>
