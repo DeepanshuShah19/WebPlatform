@@ -163,14 +163,7 @@ export const createMeeting = async (emailId, topic, time) => {
   return null;
 };
 
-export const saveMeeting = async (
-  emailId,
-  topic,
-  joinURL,
-  startURL,
-  meetingId,
-  listOfAttendee
-) => {
+export const saveMeeting = async ( emailId, topic, joinURL, startURL, meetingId, time, listOfAttendee) => {
   console.log("In saveMeeting function");
   console.log("List of Attendee: ", listOfAttendee);
   const requestBody = JSON.stringify({
@@ -179,7 +172,8 @@ export const saveMeeting = async (
     joinURL: joinURL,
     startURL: startURL,
     meetingId: meetingId,
-    listOfAttendee: ["shah8y@uwindsor.ca", "deepanshuyshah@gmail.com"]
+    time: time,
+    listOfAttendee: listOfAttendee
   });
 
   // console.log('stringified request: ', requestBody);
@@ -210,7 +204,7 @@ export const saveMeeting = async (
       return details;
     }
   } catch (err) {
-    console.error("Error while getting all tasks.", err);
+    console.error("Error while saving meeting.", err);
   }
   return null;
 };

@@ -164,12 +164,12 @@ app.post("/createMeeting", async (req, res) => {
   const token = jwt.sign(payload, API_SECRET_KEY);
   var options = {
     method: "POST",
-    uri: "https://api.zoom.us/v2/users/" + req.body.emailid + "/meetings",
+    uri: "https://api.zoom.us/v2/users/shah8y@uwindsor.ca/meetings",
     body: {
       "topic": req.body.topic,
       "type": 2,
-      "start_time": "2023-03-19T12:10:10Z",
-      // "start_time": req.body.time,
+      // "start_time": "2023-03-27T12:10:10Z",
+      "start_time": req.body.time,
       "duration": "60",
       "settings": {
         "host_video": true,
@@ -223,6 +223,7 @@ app.post("/saveMeeting", async (req, res) => {
       Join_URL: req.body.joinURL,
       Start_URL: req.body.startURL,
       MeetingId: req.body.meetingId,
+      Time: req.body.time,
       Attendee: req.body.listOfAttendee
     });
     console.log("Meeting saved in dastabase ");
