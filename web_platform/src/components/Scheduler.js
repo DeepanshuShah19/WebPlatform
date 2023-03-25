@@ -19,30 +19,29 @@ class Scheduler extends Component {
     super(props);
     this.state = {
       value: "",
-      meetingSubject: "", // add a new stae variable for meeting subject
+      meetingSubject: "",
       emails: [],
-      meetingDate: null, // add a new state variable for meeting date
-      meetingTime: null, // add a new state variable for meeting time
+      meetingDate: null,
+      meetingTime: null,
       meetingCreated: false,
     };
   }
 
   handleChange = async (event) => {
-    const { id, value } = event.target; // extract the id and value from the input field
-    this.setState({ [id]: value }); // update the corresponding state variable based on the input field id
+    const { id, value } = event.target;
+    this.setState({ [id]: value });
   };
 
   handleDateChange = async (date) => {
-    this.setState({ meetingDate: date }); // update the meeting date state variable
+    this.setState({ meetingDate: date });
   };
 
   handleTimeChange = async (time) => {
-    this.setState({ meetingTime: time }); // update the meeting time state variable
+    this.setState({ meetingTime: time });
   };
 
   handleKeyPress = async (event) => {
     if (event.key === "Enter") {
-      //Add the email to the list of emails
       this.setState((prevState) => ({
         emails: [...prevState.emails, prevState.value.trim()],
         value: "",
@@ -59,33 +58,34 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
+    console.log("user email Id: ",localStorage.getItem('userEmailId'))
     console.log("Subject:", this.state.meetingSubject);
     console.log("attendee: ", this.state.emails);
     console.log("Date", this.state.meetingDate);
     console.log("Time:", this.state.meetingTime);
-    let createMeetingResponse = await createMeeting(
-      "shah8y@uwindsor.ca",
-      "test",
-      "123465413"
-    );
-    console.log("createMeetingResponse ", createMeetingResponse);
+    // let createMeetingResponse = await createMeeting(
+    //   "shah8y@uwindsor.ca",
+    //   "test",
+    //   "123465413"
+    // );
+    // console.log("createMeetingResponse ", createMeetingResponse);
 
-    let saveMeetingResponse = await saveMeeting(
-      "shah8y@uwindsor.ca",
-      "test",
-      createMeetingResponse.join_url,
-      createMeetingResponse.start_url,
-      createMeetingResponse.id
-    );
-    if (saveMeetingResponse === "ok") {
-      console.log("Saved in database");
-      alert("Meeting Created");
-      this.setState({
-        meetingCreated: true,
-      });
-    } else {
-      console.log("error while saving");
-    }
+    // let saveMeetingResponse = await saveMeeting(
+    //   "shah8y@uwindsor.ca",
+    //   "test",
+    //   createMeetingResponse.join_url,
+    //   createMeetingResponse.start_url,
+    //   createMeetingResponse.id
+    // );
+    // if (saveMeetingResponse === "ok") {
+    //   console.log("Saved in database");
+    //   alert("Meeting Created");
+    //   this.setState({
+    //     meetingCreated: true,
+    //   });
+    // } else {
+    //   console.log("error while saving");
+    // }
   };
 
   render() {
@@ -155,7 +155,7 @@ class Scheduler extends Component {
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
-                          id="meetingSubject" // update the id to match the state variable name
+                          id="meetingSubject"
                           required
                           label="Meeting Subject"
                           type="text"
@@ -166,7 +166,7 @@ class Scheduler extends Component {
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
-                          id="value" // update the id to match the state variable name
+                          id="value"
                           required
                           label="Attendee Email Address"
                           value={this.state.value}
@@ -192,8 +192,8 @@ class Scheduler extends Component {
                               <DatePicker
                                 label="Select a Date"
                                 required
-                                value={this.state.meetingDate} //add the value prop to display the selected date
-                                onChange={this.handleDateChange} // add the onChange prop to update the state variable
+                                value={this.state.meetingDate}
+                                onChange={this.handleDateChange}
                                 autoFocus
                               />
                             </DemoItem>
@@ -207,14 +207,11 @@ class Scheduler extends Component {
                               <TimePicker
                                 disablePast
                                 label="Pick a Time"
-                                // sx={{
-                                //   width: "22rem",
-                                // }}
                                 fullWidth
                                 required
-                                value={this.state.meetingTime} // add the value prop to display the selected time
+                                value={this.state.meetingTime}
                                 autoFocus
-                                onChange={this.handleTimeChange} // add the onChange prop to update the state variable
+                                onChange={this.handleTimeChange}
                               />
                             </DemoItem>
                           </DemoContainer>

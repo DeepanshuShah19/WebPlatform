@@ -119,8 +119,6 @@ class Register extends Component {
         size: "invisible",
         callback: (response) => {
           this.onSignInSubmit();
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          // ...
         },
       },
       auth
@@ -133,38 +131,27 @@ class Register extends Component {
     const appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
         alert("OTP sended");
         this.setState({ verifyOtp: true });
-        // ...
       })
       .catch((error) => {
-        // Error; SMS not sent
-        // ...
       });
   };
 
   verifyCode = (async) => {
-    // const code = getCodeFromUserInput();
     window.confirmationResult
       .confirm(this.state.otp)
       .then((result) => {
-        // User signed in successfully.
-        // const user = result.user;
         alert("Verification Successful");
         this.setState({
           verified: true,
           verifyOtp: false,
           verifyButton: false,
         });
-        // ...
       })
       .catch((error) => {
         alert("Invalid OTP");
-        // User couldn't sign in (bad verification code?)
-        // ...
       });
   };
 
