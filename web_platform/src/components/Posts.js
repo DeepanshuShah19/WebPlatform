@@ -30,12 +30,14 @@ class Posts extends Component {
   };
 
   getUserMeeting = async () => {
-    let userMeeting = await getUserMeetings(localStorage.getItem('userEmailId'));
+    let userMeeting = await getUserMeetings(
+      localStorage.getItem("userEmailId")
+    );
     console.log("userMeetings: ", userMeeting);
     //saving in this.state.posts
     this.setState({ posts: userMeeting });
     console.log("Posts", this.state.posts, this.state.posts.length);
-  }
+  };
 
   deleteMeeting = async (meetingId) => {
     console.log(meetingId);
@@ -163,7 +165,7 @@ class Posts extends Component {
                                   color: "gray",
                                 }}
                               >
-                                {post.MeetingId}
+                                {post.Time}
                               </Typography>
                             </Grid>
                             <Grid item xs={12}>
