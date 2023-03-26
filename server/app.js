@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(cors());
 const jwt = require("jsonwebtoken");
 const rp = require("request-promise");
+const nodemailer = require("nodemailer");
 
 //API keys generated from ZOOM Marketplace
 const API_KEY = "GIR_uWycTZerS_8nt6jhQg";
@@ -323,4 +324,36 @@ app.post("/deleteMeetingFromDatabase", async (req, res) => {
       details: "Something went wrong.",
     });
   }
+});
+
+//send email API
+app.post("/sendMail", async (req, res) => {
+
+  console.log("list of attendee: ",req.body.listOfAttendee)
+  let transporter = await nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: 'shahdeepanshu90@gmail.com',
+      pass: 'nnchrehbzagxzusj'
+    },
+  });
+
+  const emailConfig = {
+    from: 'shahdeepanshu90@gmail.com', // sender address
+    to: req.body.listOfAttendee, // list of receivers
+    subject: "Hello ✔", // Subject line
+    html: "<b>Hello world?</b>", // html body
+  }
+
+  transporter.sendMail(emailConfig,(error,info)=>{
+    if (error) {
+      console.log("Error while sending mail: ",error)
+    } else {
+      console.log("Mail send: ",info.response)    
+      return res.send({
+        status: "ok",
+        details: "Mail Sent",
+      });Ï
+    }
+  })
 });
