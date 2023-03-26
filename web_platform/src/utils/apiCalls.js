@@ -296,3 +296,39 @@ export const deleteMeeting = async (meetingId) => {
   }
   return null;
 };
+
+export const sendmail = async (attendee) => {
+  const requestBody = JSON.stringify({
+    listOfAttendee: attendee
+  });
+
+  const options = {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: requestBody,
+  };
+
+  try {
+    let status;
+    let details;
+    await fetch(API_URL + "sendMail", options)
+      .then((res) => res.json())
+      .then((data) => {
+        status = data.status;
+        details = data.details;
+      });
+    if (status === "ok") {
+      return status;
+    } else {
+      return details;
+    }
+  } catch (err) {
+    console.error("Error while saving meeting.", err);
+  }
+  return null;
+};
