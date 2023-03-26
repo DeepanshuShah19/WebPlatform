@@ -13,7 +13,7 @@ import {
   Chip,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { getUserMeetings, deleteMeeting } from "../utils/apiCalls";
+import { getUserMeetings, deleteMeeting, sendmail } from "../utils/apiCalls";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 
@@ -50,6 +50,16 @@ class Posts extends Component {
       console.log("Cannot delete this meeting");
     }
   };
+
+  sendmail = async (attendee) =>{
+    let sendmailResponse = await sendmail(attendee);
+    if (sendmailResponse === "ok") {
+      console.log("Email send ")
+    } else {
+      console.log("error while sending email")      
+    }
+  }
+
   render() {
     return (
       <>
@@ -199,6 +209,9 @@ class Posts extends Component {
                                 <Button
                                   variant="contained"
                                   endIcon={<SendIcon />}
+                                  onClick={() =>
+                                    this.sendmail(post.Attendee)
+                                  }
                                 >
                                   Send Invitation
                                 </Button>
@@ -222,7 +235,7 @@ class Posts extends Component {
                     You have no meeting as of now. Please schedule meeting to
                     view it.
                     <Link href="/scheduler" variant="body2">
-                      {}
+                      { }
                       {" Click here to Create a Meeting..."}
                     </Link>
                   </Typography>
