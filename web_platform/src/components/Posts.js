@@ -217,7 +217,7 @@ class Posts extends Component {
                     view it.
                     <Link href="/scheduler" variant="body2">
                       {}
-                      {"Click here to Create a Meeting..."}
+                      {" Click here to Create a Meeting..."}
                     </Link>
                   </Typography>
                 )}
