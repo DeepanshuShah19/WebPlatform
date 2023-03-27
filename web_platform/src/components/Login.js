@@ -58,7 +58,7 @@ class Login extends Component {
 
     let loginStatus = await handleLogin(this.state.email, this.state.password);
     if (loginStatus === "ok") {
-      localStorage.setItem('userEmailId',this.state.email)
+      localStorage.setItem("userEmailId", this.state.email);
       this.setState({ loginSuccess: true });
     }
   };
@@ -69,7 +69,7 @@ class Login extends Component {
     // console.log(userDetails);
     let loginStatus = await handleGoogleLogin(userDetails);
     if (loginStatus === "ok") {
-      localStorage.setItem('userEmailId',userDetails.email)
+      localStorage.setItem("userEmailId", userDetails.email);
       this.setState({ loginSuccess: true });
     }
   };

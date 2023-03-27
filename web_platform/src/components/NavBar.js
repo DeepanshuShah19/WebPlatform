@@ -6,6 +6,13 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: localStorage.getItem("userEmailId"),
+    };
+  }
+
   navToLoginPage = (e) => {
     e.preventDefault();
   };
@@ -15,10 +22,10 @@ class NavBar extends Component {
   };
 
   signOut = async () => {
-    localStorage.removeItem("userEmailId")
-    window.location.href = "./login"
-  }
-  
+    localStorage.removeItem("userEmailId");
+    window.location.href = "./login";
+  };
+
   render() {
     return (
       <Box
@@ -86,7 +93,7 @@ class NavBar extends Component {
                   Sign Out
                 </Button>
 
-                <Link underline="none" href="/profile" varient="body2">
+                {/* <Link underline="none" href="/profile" varient="body2">
                   <Button
                     style={{
                       borderRadius: 6,
@@ -100,9 +107,15 @@ class NavBar extends Component {
                         marginRight: "0.5rem",
                       }}
                     />
-                    Profile
+                    {this.state.user}
                   </Button>
-                </Link>
+                </Link> */}
+                <AccountCircleIcon
+                  style={{
+                    marginRight: "0.5rem",
+                  }}
+                />
+                {this.state.user}
               </Stack>
             </nav>
           </Stack>
