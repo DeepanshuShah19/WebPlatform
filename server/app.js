@@ -339,10 +339,10 @@ app.post("/sendMail", async (req, res) => {
   });
 
   const emailConfig = {
-    from: 'shahdeepanshu90@gmail.com', // sender address
+    from: req.body.email, // sender address
     to: req.body.listOfAttendee, // list of receivers
-    subject: "Hello ✔", // Subject line
-    html: "<b>Hello world?</b>", // html body
+    subject: "Upcoming meeting updates", // Subject line
+    html: "<b>Hello!</b> <br> <b>You are invited to join a zoom meeting held on " + req.body.time + "</b> <br> <b> use this link to join the zoom call</b>" + req.body.joinURL,
   }
 
   transporter.sendMail(emailConfig,(error,info)=>{

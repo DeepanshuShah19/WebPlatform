@@ -297,9 +297,12 @@ export const deleteMeeting = async (meetingId) => {
   return null;
 };
 
-export const sendmail = async (attendee) => {
+export const sendmail = async (attendee, emailId, joinURL, time) => {
   const requestBody = JSON.stringify({
-    listOfAttendee: attendee
+    listOfAttendee: attendee,
+    email: emailId,
+    joinURL: joinURL,
+    time: time
   });
 
   const options = {
