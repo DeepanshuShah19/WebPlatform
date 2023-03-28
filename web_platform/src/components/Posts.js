@@ -65,8 +65,8 @@ class Posts extends Component {
     }
   };
 
-  sendmail = async (attendee) => {
-    let sendmailResponse = await sendmail(attendee);
+  sendmail = async (attendee, joinURL, time) => {
+    let sendmailResponse = await sendmail(attendee, localStorage.getItem("userEmailId"), joinURL, time);
     if (sendmailResponse === "ok") {
       Swal.fire({
         icon: "success",
@@ -237,7 +237,7 @@ class Posts extends Component {
                                 <Button
                                   variant="contained"
                                   endIcon={<SendIcon />}
-                                  onClick={() => this.sendmail(post.Attendee)}
+                                  onClick={() => this.sendmail(post.Attendee,post.Join_URL,post.Time)}
                                 >
                                   Send Invitation
                                 </Button>

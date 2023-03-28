@@ -84,11 +84,7 @@ class Home extends Component {
                         paddingRight: 5,
                       }}
                     >
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Vestibulum facilisis urna sed lectus aliquet placerat.
-                      Donec egestas massa in quam consequat rutrum. Phasellus
-                      sem elit, mattis id enim congue, suscipit porta mauris.
-                      Vivamus euismod purus lacinia porttitor pulvinar.
+                      Click Your Meeting button to see you all scheduled meeting.
                     </Typography>
 
                     <Link
@@ -141,11 +137,7 @@ class Home extends Component {
                         paddingRight: 5,
                       }}
                     >
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Vestibulum facilisis urna sed lectus aliquet placerat.
-                      Donec egestas massa in quam consequat rutrum. Phasellus
-                      sem elit, mattis id enim congue, suscipit porta mauris.
-                      Vivamus euismod purus lacinia porttitor pulvinar.
+                      Click Schedule meeting button to schedule a new zoom meeting.
                     </Typography>
 
                     <Link href="/scheduler" underline="None" variant="body2">
