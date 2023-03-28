@@ -19,6 +19,7 @@ import Copyright from "./Copyright";
 import { GoogleLogin } from "@react-oauth/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import Swal from "sweetalert2";
 
 const theme = createTheme();
 
@@ -55,11 +56,22 @@ class Login extends Component {
 
   handleLogin = async (e) => {
     e.preventDefault();
-
     let loginStatus = await handleLogin(this.state.email, this.state.password);
     if (loginStatus === "ok") {
+      Swal.fire({
+        icon: "success",
+        title: "Login Successfull!",
+        text: "You have successfully logged in...",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => this.setState({ loginSuccess: true }));
       localStorage.setItem("userEmailId", this.state.email);
-      this.setState({ loginSuccess: true });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Login Unsuccessfull!",
+        text: "Please check you email and password..",
+      });
     }
   };
 
@@ -69,8 +81,14 @@ class Login extends Component {
     // console.log(userDetails);
     let loginStatus = await handleGoogleLogin(userDetails);
     if (loginStatus === "ok") {
+      Swal.fire({
+        icon: "success",
+        title: "Login Successfull!",
+        text: "You have successfully logged in...",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => this.setState({ loginSuccess: true }));
       localStorage.setItem("userEmailId", userDetails.email);
-      this.setState({ loginSuccess: true });
     }
   };
 

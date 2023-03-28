@@ -13,6 +13,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { createMeeting, saveMeeting } from "../utils/apiCalls";
+import Swal from "sweetalert2";
 
 class Scheduler extends Component {
   constructor(props) {
@@ -58,21 +59,58 @@ class Scheduler extends Component {
   };
 
   scheduleMeeting = async () => {
-    let meetTime = this.state.meetingDate.$y + "-" + (this.state.meetingDate.$M+1) + "-" + this.state.meetingDate.$D + "T" + this.state.meetingTime.$H + ":" + this.state.meetingTime.$m + ":00Z"
-    console.log("Meeting Time: ", meetTime)
-    let createMeetingResponse = await createMeeting(localStorage.getItem('userEmailId'),this.state.meetingSubject,meetTime);
+    let meetTime =
+      this.state.meetingDate.$y +
+      "-" +
+      (this.state.meetingDate.$M + 1) +
+      "-" +
+      this.state.meetingDate.$D +
+      "T" +
+      this.state.meetingTime.$H +
+      ":" +
+      this.state.meetingTime.$m +
+      ":00Z";
+    console.log("Meeting Time: ", meetTime);
+    let createMeetingResponse = await createMeeting(
+      localStorage.getItem("userEmailId"),
+      this.state.meetingSubject,
+      meetTime
+    );
     console.log("createMeetingResponse ", createMeetingResponse);
 
-    let saveMeetingResponse = await saveMeeting(localStorage.getItem('userEmailId'),this.state.meetingSubject,createMeetingResponse.join_url,
-                                            createMeetingResponse.start_url,createMeetingResponse.id, meetTime, this.state.emails);
+    let saveMeetingResponse = await saveMeeting(
+      localStorage.getItem("userEmailId"),
+      this.state.meetingSubject,
+      createMeetingResponse.join_url,
+      createMeetingResponse.start_url,
+      createMeetingResponse.id,
+      meetTime,
+      this.state.emails
+    );
     if (saveMeetingResponse === "ok") {
       console.log("Saved in database");
-      alert("Meeting Created");
-      this.setState({
-        meetingCreated: true,
-      });
+      Swal.fire({
+        icon: "success",
+        title: "Meeting Created!",
+        text: "New meeting has been created...",
+        showConfirmButton: false,
+        timer: 2500,
+      }).then(() =>
+        this.setState({
+          meetingCreated: true,
+        })
+      );
+
+      // alert("Meeting Created");
     } else {
       console.log("error while saving");
+      Swal.fire({
+        icon: "error",
+        title: "Unsuccessfull!",
+        text: "Unable to create a meeting",
+        showConfirmButton: false,
+        timer: 2500,
+      });
     }
   };
 

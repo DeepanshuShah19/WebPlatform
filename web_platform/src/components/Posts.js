@@ -16,6 +16,7 @@ import Button from "@mui/material/Button";
 import { getUserMeetings, deleteMeeting, sendmail } from "../utils/apiCalls";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
+import Swal from "sweetalert2";
 
 class Posts extends Component {
   constructor(props) {
@@ -44,21 +45,48 @@ class Posts extends Component {
     let deleteMeetingResponse = await deleteMeeting(meetingId);
 
     if (deleteMeetingResponse === "ok") {
+      Swal.fire({
+        icon: "success",
+        title: "Meeting Deleted!",
+        text: "Youe has been successfully deleted...",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => this.getUserMeeting());
       console.log("Meeting Deleted");
-      this.getUserMeeting();
     } else {
+      Swal.fire({
+        icon: "error",
+        title: "Unsuccessfull! ",
+        text: "Unable to delete a meeting...",
+        showConfirmButton: false,
+        timer: 2000,
+      });
       console.log("Cannot delete this meeting");
     }
   };
 
-  sendmail = async (attendee) =>{
+  sendmail = async (attendee) => {
     let sendmailResponse = await sendmail(attendee);
     if (sendmailResponse === "ok") {
-      console.log("Email send ")
+      Swal.fire({
+        icon: "success",
+        title: "Invitation Sent!",
+        text: "Meeting invitation is sent to attendee...",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      console.log("Email send ");
     } else {
-      console.log("error while sending email")      
+      Swal.fire({
+        icon: "error",
+        title: "Unsuccessfull!",
+        text: "Unable to send meeting invitation...",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      console.log("error while sending email");
     }
-  }
+  };
 
   render() {
     return (
@@ -209,9 +237,7 @@ class Posts extends Component {
                                 <Button
                                   variant="contained"
                                   endIcon={<SendIcon />}
-                                  onClick={() =>
-                                    this.sendmail(post.Attendee)
-                                  }
+                                  onClick={() => this.sendmail(post.Attendee)}
                                 >
                                   Send Invitation
                                 </Button>
@@ -235,7 +261,7 @@ class Posts extends Component {
                     You have no meeting as of now. Please schedule meeting to
                     view it.
                     <Link href="/scheduler" variant="body2">
-                      { }
+                      {}
                       {" Click here to Create a Meeting..."}
                     </Link>
                   </Typography>
