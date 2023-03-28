@@ -22,6 +22,8 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth";
 
+import Swal from "sweetalert2";
+
 const theme = createTheme();
 const auth = getAuth(app);
 
@@ -108,7 +110,19 @@ class Register extends Component {
       this.state.phone
     );
     if (registartionResponse === "ok") {
-      this.setState({ registrationSuccess: true });
+      Swal.fire({
+        icon: "success",
+        title: "Registration Successfull!",
+        text: "You have successfully register...",
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => this.setState({ registrationSuccess: true }));
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Registration Unsuccessfull!",
+        text: { registartionResponse },
+      });
     }
   };
 
@@ -132,18 +146,31 @@ class Register extends Component {
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
-        alert("OTP sended");
+        Swal.fire({
+          icon: "success",
+          title: "OTP Sended!",
+          text: "Check your phone for otp...",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        // alert("OTP sended");
         this.setState({ verifyOtp: true });
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   verifyCode = (async) => {
     window.confirmationResult
       .confirm(this.state.otp)
       .then((result) => {
-        alert("Verification Successful");
+        Swal.fire({
+          icon: "success",
+          title: "Verification Successfull!",
+          text: "Code has been Verified...",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        // alert("Verification Successful");
         this.setState({
           verified: true,
           verifyOtp: false,
@@ -151,7 +178,12 @@ class Register extends Component {
         });
       })
       .catch((error) => {
-        alert("Invalid OTP");
+        Swal.fire({
+          icon: "error",
+          title: "Invalid OTP",
+          text: "Please type correct OTP...",
+        });
+        // alert("Invalid OTP");
       });
   };
 
