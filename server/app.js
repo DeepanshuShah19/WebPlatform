@@ -13,7 +13,7 @@ const API_KEY = "GIR_uWycTZerS_8nt6jhQg";
 const API_SECRET_KEY = "A0mK6ZehBeO6YQCtVU6qP7bvVvj91KDdH5qf";
 
 const mongoDbURL =
-  "mongodb+srv://deepanshu:university@webportal.iumygie.mongodb.net/WebPortal?retryWrites=true&w=majority";
+  ""; //create mongodb cluster and add url here
 
 //MongoDb Connection
 mongoose
@@ -333,8 +333,8 @@ app.post("/sendMail", async (req, res) => {
   let transporter = await nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: 'shahdeepanshu90@gmail.com',
-      pass: 'nnchrehbzagxzusj'
+      user: '', //email id here
+      pass: '' //password here
     },
   });
 
